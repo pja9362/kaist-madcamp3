@@ -7,6 +7,7 @@ import concert4 from '../images/concert4.jpeg';
 import concert5 from '../images/concert5.jpeg';
 import concert6 from '../images/concert6.jpeg';
 import concert7 from '../images/concert7.png';
+import mainconcert from '../images/mainconcert.png';
 
 import './Tickets.css';
 import { Button } from '@mui/material';
@@ -19,12 +20,13 @@ const Tickets = () => {
 
     const slides = [
         { id: 4, image: concert4, title: 'Concert 4' },
-        { id: 1, image: concert1, title: 'Concert 1' },
         { id: 2, image: concert2, title: 'Concert 2' },
-        { id: 5, image: concert5, title: 'Concert 5' },
-        { id: 3, image: concert3, title: 'Concert 3' },
+        { id: 7, image: concert7, title: 'Concert 7' },
+        { id: 8, image: mainconcert, title: 'Main Concert'},
         { id: 6, image: concert6, title: 'Concert 6' },
-        { id: 7, image: concert7, title: 'Concert 6' },
+        { id: 1, image: concert1, title: 'Concert 1' },
+        { id: 3, image: concert3, title: 'Concert 3' },
+        { id: 5, image: concert5, title: 'Concert 5' },
     ];
 
     const nextSlide = () => {
