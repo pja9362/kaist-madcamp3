@@ -61,7 +61,7 @@ const About = () => {
             left: 54.50,
             top: 360,
             position: 'absolute',
-            animationDelay: '0s', // 애니메이션 지연 시간 설정
+            animationDelay: '0.2s', // 애니메이션 지연 시간 설정
           }}
         ></img>
         <img
@@ -74,7 +74,7 @@ const About = () => {
             top: 130,
             position: 'absolute',
             transformOrigin: '0 0',
-            animationDelay: '0s', // 애니메이션 지연 시간 설정
+            animationDelay: '0.6s', // 애니메이션 지연 시간 설정
           }}
         ></img>
         <div
@@ -85,7 +85,7 @@ const About = () => {
             top: 0, 
             position: 'absolute', 
             transformOrigin: '0 0',
-            animationDelay: '0s', // 애니메이션 지연 시간 설정
+            animationDelay: '0.2s', // 애니메이션 지연 시간 설정
             border: '5px white solid' ,
             transform: 'rotate(90deg)', 
           }}

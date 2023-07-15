@@ -28,7 +28,6 @@ const Header = () => {
                 setAddress(accounts[0]);
                 // Set login state to true
                 setIsLogin(true);
-                console.log('Login successful.' + isLogin);
             } else {
                 // Metamask is not available
                 alert('Please install and connect Metamask to login.');
@@ -97,7 +96,6 @@ const Header = () => {
     useEffect(() => {
         if (isLogin) {
             getWalletBalance();
-            console.log("get Wallet Balance! " + getWalletBalance());
         }
     }, [isLogin]);
 
