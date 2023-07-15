@@ -51,8 +51,8 @@ const EnlargedButton = styled(Button)({
 
 const GradientText = styled(Typography)({
   background: 'linear-gradient(to bottom right , #C0C0C0, #FFFFFF)',
-  '-webkit-background-clip': 'text',
-  '-webkit-text-fill-color': 'transparent'
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent'
 });
 
 const SplashPage = () => {
@@ -74,18 +74,18 @@ const SplashPage = () => {
       {isLoaded && (
         <>
           <FadeIn as={GradientText} sx={{fontWeight: 900}} variant="h3" delay="0s">
-            Hello MetaStage
+            Welcome MetaStage
           </FadeIn>
           <div>
             <FadeIn as={GradientText} sx={{p: '10px 0 30px'}} variant="h5" delay="0.5s">
               Stage 너머의 Stage
             </FadeIn>
             
-            <FadeIn class="nftImg" as="img" src={nft1} alt="nft1-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '15%', left: '15%', borderRadius: '50%', transform: 'rotate(30deg)' }} delay="1s" />
-            <FadeIn class="nftImg" as="img" src={nft5} alt="nft5-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '70%', left: '30%',  borderRadius: '50%', transform: 'rotate(-30deg)' }} delay="1.5s" />
-            <FadeIn class="nftImg" as="img" src={nft3} alt="nft3-img" style={{ width: '88px', height: '88px', position: 'absolute', top: '50%', left: '8%',  borderRadius: '50%', transform: 'rotate(-30deg)' }} delay="2s" />
-            <FadeIn class="nftImg" as="img" src={nft4} alt="nft4-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '9%', right: '20%',  borderRadius: '50%', transform: 'rotate(30deg)' }} delay="2.5s" />
-            <FadeIn class="nftImg" as="img" src={nft2} alt="nft5-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '60%', right: '10%',  borderRadius: '50%', transform: 'rotate(-30deg)' }} delay="3s" />
+            <FadeIn className="nftImg" as="img" src={nft1} alt="nft1-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '15%', left: '15%', borderRadius: '50%', transform: 'rotate(30deg)' }} delay="1s" />
+            <FadeIn className="nftImg" as="img" src={nft5} alt="nft5-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '70%', left: '30%',  borderRadius: '50%', transform: 'rotate(-30deg)' }} delay="1.5s" />
+            <FadeIn className="nftImg" as="img" src={nft3} alt="nft3-img" style={{ width: '88px', height: '88px', position: 'absolute', top: '50%', left: '8%',  borderRadius: '50%', transform: 'rotate(-30deg)' }} delay="2s" />
+            <FadeIn className="nftImg" as="img" src={nft4} alt="nft4-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '9%', right: '20%',  borderRadius: '50%', transform: 'rotate(30deg)' }} delay="2.5s" />
+            <FadeIn className="nftImg" as="img" src={nft2} alt="nft5-img" style={{ width: '128px', height: '128px', position: 'absolute', top: '60%', right: '10%',  borderRadius: '50%', transform: 'rotate(-30deg)' }} delay="3s" />
           </div>
           <FadeIn as={EnlargedButton} variant="contained" onClick={handleClick} delay="3.3s">
             시작하기

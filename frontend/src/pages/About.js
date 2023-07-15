@@ -26,7 +26,7 @@ const About = () => {
             height: 100%;
             position: absolute;
             right: 0;
-            background: linear-gradient(to left, rgba(0, 0, 0, 0.7), black), url(${backgroundImg}) center/cover;
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.3), black), url(${backgroundImg}) center/cover;
             animation: gradient-animation 10s infinite;
           }
           .text-gradient {
@@ -61,7 +61,7 @@ const About = () => {
             left: 54.50,
             top: 360,
             position: 'absolute',
-            animationDelay: '0s', // 애니메이션 지연 시간 설정
+            animationDelay: '0.2s', // 애니메이션 지연 시간 설정
           }}
         ></img>
         <img
@@ -74,7 +74,7 @@ const About = () => {
             top: 130,
             position: 'absolute',
             transformOrigin: '0 0',
-            animationDelay: '0s', // 애니메이션 지연 시간 설정
+            animationDelay: '0.6s', // 애니메이션 지연 시간 설정
           }}
         ></img>
         <div
@@ -85,7 +85,7 @@ const About = () => {
             top: 0, 
             position: 'absolute', 
             transformOrigin: '0 0',
-            animationDelay: '0s', // 애니메이션 지연 시간 설정
+            animationDelay: '0.2s', // 애니메이션 지연 시간 설정
             border: '5px white solid' ,
             transform: 'rotate(90deg)', 
           }}
