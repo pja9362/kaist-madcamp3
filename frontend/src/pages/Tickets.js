@@ -10,9 +10,10 @@ import concert7 from '../images/concert7.png';
 import mainconcert from '../images/mainconcert.png';
 
 import './Tickets.css';
-import { Button, Container } from '@mui/material';
+import { Button, Container, Box } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import zIndex from '@mui/material/styles/zIndex';
 
 const Tickets = () => {
     const carouselRef = useRef(null);
@@ -84,10 +85,10 @@ const Tickets = () => {
             />
           ))}
         </div>
-        <Button className="prev-button" onClick={prevSlide} startIcon={<ArrowBackIosIcon />}>
+        <Button className="prevButton" onClick={prevSlide} startIcon={<ArrowBackIosIcon />} sx={{left: 0, color: '#fff', zIndex: 3, position: 'absolute', top: '50%' , fontWeight: '900'}}>
           Prev
         </Button>
-        <Button className="next-button" onClick={nextSlide} endIcon={<ArrowForwardIosIcon />}>
+        <Button className="nextButton" onClick={nextSlide} endIcon={<ArrowForwardIosIcon />} sx={{right: 0, color: '#fff', zIndex: 3,  position: 'absolute', top: '50%', fontWeight: '900' }}>
           Next
         </Button>
       </div>
