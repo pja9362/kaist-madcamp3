@@ -74,7 +74,7 @@ const SplashPage = () => {
       {isLoaded && (
         <>
           <FadeIn as={GradientText} sx={{fontWeight: 900}} variant="h3" delay="0s">
-            Hello MetaStage
+            Welcome MetaStage
           </FadeIn>
           <div>
             <FadeIn as={GradientText} sx={{p: '10px 0 30px'}} variant="h5" delay="0.5s">

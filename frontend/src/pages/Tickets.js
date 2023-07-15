@@ -10,16 +10,42 @@ import concert7 from '../images/concert7.png';
 import mainconcert from '../images/mainconcert.png';
 import backImage from '../images/back_ticket.png';
 import './Tickets.css';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TicketModal from '../components/TicketModal';
+import axios from 'axios';
+
+const BLOCK_API_URL = process.env.REACT_APP_BLOCK_API_URL;
 
 const Tickets = () => {
     const carouselRef = useRef(null);
     const [currentSlide, setCurrentSlide] = useState(3);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedConcert, setSelectedConcert] = useState(null);
+
+    // Connect to the blockchain API
+    // const [nftCount, setNftCount] = useState(''); 
+    
+    // useEffect(() => {
+    //   // Function to fetch nftCount from the API
+    //   const fetchNftCount = async () => {
+    //     const apiUrl = process.env.REACT_APP_API_URL;
+    //     try {
+    //       const response = await fetch(`${apiUrl}/nft-count`);
+    //       if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //       }
+    //       const data = await response.json();
+    //       const { nftCount } = data;
+    //       alert('nftCount:', data);
+    //       setNftCount(nftCount);
+    //     } catch (error) {
+    //       console.error('Error fetching nftCount:', error);
+    //     }
+    //   };
+    //   fetchNftCount();
+    // }, []); 
 
     const slides = [
         { id: 4, image: concert4, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'},
@@ -31,6 +57,8 @@ const Tickets = () => {
         { id: 3, image: concert3, title: '세븐틴 월드투어 BE THE SUN', date: '2023.7.31', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'  },
         { id: 5, image: concert5, title: 'WINNER 단독 콘서트', date: '2023.7.30', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원' },
     ];
+
+    const [ticketCounts, setTicketCounts] = useState(Array(slides.length).fill(30));
 
     const nextSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide === slides.length - 1 ? 0 : prevSlide + 1));
@@ -96,7 +124,8 @@ const Tickets = () => {
                 </div>
                 <div className="back">
                     <div className='back-content'>
-                          <Button onClick={() => handlePurchaseClick(slide)} variant="outlined" sx={{color: 'white', border: '1px solid #fff'}} className="buy-button">
+                          <Typography className='ticket-count' sx={{ color: 'white', fontSize: '11px', mt: '5px' }}>{ticketCounts[index]}/30</Typography>
+                          <Button onClick={() => handlePurchaseClick(slide)} variant="outlined" sx={{color: 'white', fontSize: '12px', p: '2px 10px', border: '1px solid #fff'}} className="buy-button">
                               티켓 구매
                           </Button>
                           <img src={backImage} alt={`Concert ${slide.id}`}/> 

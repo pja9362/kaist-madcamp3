@@ -60,7 +60,6 @@
 
 .carousel-item .back {
   transform: rotateY(180deg);
-  /* 여기부터 수정 */
   display: flex;
   flex-direction: column;
 }
@@ -72,7 +71,15 @@
 
 .carousel-item .back-content .buy-button {
   position: absolute;
-  top: 20px; 
+  top: 35px; 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.carousel-item .back-content .ticket-count {
+  position: absolute;
+  top: 10px; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -123,8 +130,6 @@
 .back-content img {
   height: 100%;
 }
-
-
 
 .prevButton:hover,
 .nextButton:hover {
