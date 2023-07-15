@@ -10,7 +10,7 @@ import concert7 from '../images/concert7.png';
 import mainconcert from '../images/mainconcert.png';
 
 import './Tickets.css';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 

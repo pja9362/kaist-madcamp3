@@ -4,7 +4,6 @@
     position: relative;
     perspective: 1000px;
     top: 25%;
-    flex:none;
   }
   
   .carousel {

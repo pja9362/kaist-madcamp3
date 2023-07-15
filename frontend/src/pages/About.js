@@ -26,7 +26,7 @@ const About = () => {
             height: 100%;
             position: absolute;
             right: 0;
-            background: linear-gradient(to left, rgba(0, 0, 0, 0.7), black), url(${backgroundImg}) center/cover;
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.3), black), url(${backgroundImg}) center/cover;
             animation: gradient-animation 10s infinite;
           }
           .text-gradient {
