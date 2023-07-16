@@ -1,0 +1,229 @@
+:root {
+    --border-color: #FF0060;
+    --base-color: #ecf4f6;
+    --point-color: #6588DE;
+    --point-color2: #b4b7be;
+}
+
+.root-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-border {
+    border: var(--border-color) 1px solid;
+}
+
+.container {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, .1);
+    background-color: white;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: row;
+
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+/* chat list */
+
+.chat-header-box {
+    height: 100px;
+    background: conic-gradient(from 202deg at 81.78% 23.22%, #4629F2 0deg, #13C6FF 125.62440357627869deg, #B94DFB 215.62499284744263deg, #FF53EE 294.3749928474426deg, #F3B960 360deg), #D9D9D9;
+    backdrop-filter: blur(10px);
+    -webkit-filter: blur(10px);
+}
+
+.chat-list-box {
+    height: 100%;
+}
+
+.chat-list-header {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, .1);
+    padding: 30px;
+    background: var(--base-color);
+    border-radius: 0px 0px 14px 14px;
+}
+
+.chat-list {
+    padding: 15px;
+    margin-top: 10px;
+    height: 100%;
+    background: var(--base-color);
+    border-radius: 14px 14px 0px 0px;
+}
+
+
+.chat-mode-box {
+    margin-top: 30px;
+    display: flex;
+    width: 260px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    border: 1px solid #F8F1F1;
+    background: #FDFDFD;
+    box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.10);
+}
+
+.chat-mode-selected {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    width: 130px;
+    height: 40px;
+    border-radius: 14px;
+    background: var(--point-color);
+    color: #FDFDFE;
+    font-size: 12px;
+}
+
+.chat-mode {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    width: 130px;
+    height: 40px;
+    border-radius: 14px;
+    color: #52585E;
+    font-size: 12px;
+}
+
+
+/* chat main */
+
+.chat-box {
+    flex: 3;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: center;
+}
+
+.chat-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+
+/* list item */
+
+.list-item-box {
+    padding: 15px;
+    width: 310px;
+    height: 74px;
+    display: flex;
+    flex-direction: row;
+}
+
+.list-item-box-selected {
+    background-color: var(--point-color);
+    padding: 15px;
+    width: 310px;
+    height: 74px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 14px;
+    box-shadow: 0px 8px 40px 0px rgba(0, 72, 251, 0.30);
+}
+
+.list-item-photo-selected {
+    background: #cccccc;
+    margin-right: 15px;
+    height: 44px;
+    width: 44px;
+    border-radius: 44px;
+    border: 2px solid var(--border-color);
+}
+
+.list-item-photo {
+    background: #cccccc;
+    margin-right: 15px;
+    height: 44px;
+    width: 44px;
+    border-radius: 44px;
+    border: 2px solid var(--point-color);
+}
+
+/* text */
+.bold-text-white {
+    color: white;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.medium-text-white {
+    color: white;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.bold-text {
+    color: #52585D;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.medium-text {
+    color: #96A9BA;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+/* bottom input */
+.chat-input-box {
+    margin-left: 10px;
+    flex: 1;
+    box-sizing: border-box;
+    height: 40px;
+    border-radius: 14px;
+    border: 2px solid rgba(198, 198, 198, 0.7);
+    background: #FDFDFD;
+}
+
+.chat-input-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 108px;
+    height: 40px;
+    border-radius: 14px;
+    background: var(--point-color);
+    transform: translateX(-60px);
+    color: white;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 0px 10px;
+}
