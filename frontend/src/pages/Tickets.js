@@ -21,34 +21,59 @@ const Tickets = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedConcert, setSelectedConcert] = useState(null);
 
-    const IP_ADDRESS = "172.10.5.130";
+    // Connect to the blockchain API
+    // const [ticketCount, setTicketCount] = useState(''); 
+    
+    // useEffect(() => {
+    //   const IP_ADDRESS = "172.10.5.130";
+    //   const PORT = 80;
+    //   const ROUTER_PATH = "/meta-stage-web3/api/v1";
+  
+    //   const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}`;
+  
+    //   const fetchNftCount = async () => {
+    //     try {
+    //       const response = await fetch(`${API_URL}/nft-count`);
+    //       if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //       }
+    //       const data = await response.json();
+    //       const { nftCount } = data;
+    //       console.log('nftCount:', data);
+    //       setTicketCount(nftCount);
+    //     } catch (error) {
+    //       console.error('Error fetching nftCount:', error);
+    //     }
+    //   };
+    //   fetchNftCount();
+    // }, []); 
+  
+    const [ticketCount, setTicketCount] = useState('');
+
+  const fetchUpdatedTicketCount = async () => {
+    const IP_ADDRESS = '172.10.5.130';
     const PORT = 80;
-    const ROUTER_PATH = "/meta-stage-web3/api/v1";
+    const ROUTER_PATH = '/meta-stage-web3/api/v1';
 
     const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}`;
 
-    // Connect to the blockchain API
-    const [ticketCount, setTicketCount] = useState(''); 
-    
-    useEffect(() => {
-      // console.log('useEffect', process.env.BLOCK_API_URL);
-      // Function to fetch nftCount from the API
-      const fetchNftCount = async () => {
-        try {
-          const response = await fetch(`${API_URL}/nft-count`);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
-          const { nftCount } = data;
-          console.log('nftCount:', data);
-          setTicketCount(nftCount);
-        } catch (error) {
-          console.error('Error fetching nftCount:', error);
-        }
-      };
-      fetchNftCount();
-    }, []); 
+    try {
+      const response = await fetch(`${API_URL}/nft-count`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      const { nftCount } = data;
+      console.log('nftCount:', data);
+      setTicketCount(nftCount);
+    } catch (error) {
+      console.error('Error fetching nftCount:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUpdatedTicketCount();
+  }, [isModalOpen]);
 
     const slides = [
         { id: 4, image: concert4, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'},
@@ -60,8 +85,6 @@ const Tickets = () => {
         { id: 3, image: concert3, title: '세븐틴 월드투어 BE THE SUN', date: '2023.7.31', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'  },
         { id: 5, image: concert5, title: 'WINNER 단독 콘서트', date: '2023.7.30', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원' },
     ];
-
-    // const [ticketCounts, setTicketCounts] = useState(Array(slides.length).fill(30));
 
     const nextSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide === slides.length - 1 ? 0 : prevSlide + 1));
