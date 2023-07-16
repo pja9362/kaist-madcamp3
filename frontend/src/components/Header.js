@@ -132,7 +132,7 @@ const Header = () => {
                     <AttachMoneyIcon sx={{width: '35px', height: '35px', mr: '15px'}}/>
                     <ListItemText primary="지갑 잔고" />
                 </Box>
-                <Typography sx={{fontSize: '12px'}}>{walletBalance} <span style={{fontWeight: '900'}}>SepoliaETH</span></Typography>
+                <Typography sx={{fontSize: '12px'}}>{walletBalance} <span style={{fontWeight: '900', marginLeft: '5px' }}>ETH</span></Typography>
             </ListItem>
 
             {/* 프로필 수정 */}
