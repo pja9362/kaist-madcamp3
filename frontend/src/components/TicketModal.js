@@ -1,9 +1,40 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
+import Web3 from 'web3';
+import data from "../abi/data.json";
+import config from '../config/config';
 
 const TicketModal = ({ open, onClose, concert }) => {
-    const handlePurchaseConfirmation = (concert) => {
-        alert('예매 완료!');
+
+    const contractAddress = config.contractAddress;
+    const [isMinting, setIsMinting]= useState(false);
+
+    const handlePurchaseConfirmation = async () => {
+            // 메타마스크와 연동하는 코드 추가
+            try {
+                // Web3 인스턴스 생성
+                const web3 = new Web3(window.ethereum);
+                // 스마트 컨트랙트 인스턴스 생성
+                const contract = new web3.eth.Contract(data, contractAddress);
+                
+                console.log(contract);
+                
+                // 사용자의 지갑 주소 가져오기
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accounts[0];
+                // 스마트 컨트랙트의 함수 호출
+                await contract.methods.MintTicket()
+                .send({ from: account, value: web3.utils.toWei("0.001", "ether")
+                // .on('receipt', function (receipt) {
+                //     setIsMinting(true);
+                //     console.log(receipt);
+                //   }) 
+                });
+                // 예매 완료 알림
+                alert('예매 완료!');
+            } catch (error) {
+                console.error(error);
+            }
     };
 
     return (
@@ -54,7 +85,7 @@ const TicketModal = ({ open, onClose, concert }) => {
                         </Typography>
                     </Box>
                     <Box sx={{m: '20px 10px 0px'}}>
-                        <Button onClick={() => handlePurchaseConfirmation(concert)} variant="contained" color="primary" sx={{ mr: 2, backgroundColor: '#000' }}>
+                        <Button onClick={handlePurchaseConfirmation} variant="contained" color="primary" sx={{ mr: 2, backgroundColor: '#000' }}>
                             예매
                         </Button>
                         <Button onClick={onClose} variant="contained" sx={{backgroundColor: '#000'}}>

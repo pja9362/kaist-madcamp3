@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import OpenseaIcon from '../images/icon_opensea.png';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import logo from '../images/logo_black.png';
 
 const Header = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -150,9 +151,7 @@ const Header = () => {
         <>
         <AppBar position="static">
             <Toolbar style={{ justifyContent: 'center', backgroundColor: '#fff', color: '#000', textAlign: 'center' }}>
-            <Typography variant="h6" component="div" sx={{ left: '20' }}>
-                Logo
-            </Typography>
+            <img src={logo} alt="Logo" style={{ width: '4%', height: 'auto', marginLeft: '15px' }} />
 
             <nav style={{ flexGrow: 1 }}>
                 <Button component={Link} to="/about" color="inherit">About</Button>

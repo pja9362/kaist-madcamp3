@@ -3,7 +3,7 @@
     margin: 0 10%;
     position: fixed;
     perspective: 1000px;
-    top: 27%;
+    top: 33%;
 }
   
 .carousel {
@@ -138,7 +138,7 @@
 
 .navigator {
     position: absolute;
-    top: 150%;
+    top: 155%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
