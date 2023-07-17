@@ -7,6 +7,7 @@ import config from '../config/config';
 const TicketModal = ({ open, onClose, concert }) => {
 
     const contractAddress = config.contractAddress;
+    const [isMinting, setIsMinting]= useState(false);
 
     const handlePurchaseConfirmation = async () => {
             // 메타마스크와 연동하는 코드 추가
@@ -22,7 +23,13 @@ const TicketModal = ({ open, onClose, concert }) => {
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accounts[0];
                 // 스마트 컨트랙트의 함수 호출
-                await contract.methods.MintTicket().send({ from: account, value: web3.utils.toWei("0.001", "ether") });
+                await contract.methods.MintTicket()
+                .send({ from: account, value: web3.utils.toWei("0.001", "ether")
+                // .on('receipt', function (receipt) {
+                //     setIsMinting(true);
+                //     console.log(receipt);
+                //   }) 
+                });
                 // 예매 완료 알림
                 alert('예매 완료!');
             } catch (error) {
