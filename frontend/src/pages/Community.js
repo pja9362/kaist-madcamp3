@@ -4,14 +4,15 @@ import './Community.css';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import CommunityChat from './CommunityChat';
+import backImage from '../images/background_grad.png';
 const Community = () => {
-    
+
     return (
         <div className='root-container'>
             <Header/>
             <div className='container'>
                 <div className='chat-list-box'>
-                    <div className='chat-list-header'>
+                    <div className='chat-list-header' style={{backgroundImage: `url(${backImage})`}}>
                         <div className='flex-row'>
                             <div className='list-item-photo'></div>
                             <div className='flex-column'>
@@ -59,7 +60,7 @@ const Community = () => {
                         </div>
                     </div>
                 </div>
-                <CommunityChat/>
+                <CommunityChat tokenId={'연오'}/>
             </div>
         </div>
     );
