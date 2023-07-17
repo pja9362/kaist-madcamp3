@@ -14,4 +14,4 @@ export const SOCKET_RECEIVE = {
   USER_IN: "user-entered",
   MESSAGE: "message"
 };
-export const SOCKET_URL = 'http://143.248.200.34:80/chat';
+export const SOCKET_URL = 'http://172.10.5.147:80/chat';
