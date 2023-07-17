@@ -44,7 +44,6 @@
 
 .chat-header-box {
     height: 100px;
-    background: conic-gradient(from 202deg at 81.78% 23.22%, #4629F2 0deg, #13C6FF 125.62440357627869deg, #B94DFB 215.62499284744263deg, #FF53EE 294.3749928474426deg, #F3B960 360deg), #D9D9D9;
     backdrop-filter: blur(10px);
     -webkit-filter: blur(10px);
 }
@@ -148,16 +147,22 @@
 }
 
 .list-item-photo-selected {
-    background: #cccccc;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     margin-right: 15px;
     height: 44px;
     width: 44px;
     border-radius: 44px;
-    border: 2px solid var(--border-color);
+    border: 3px solid #13C6FF ;
+    /* border: 2px solid conic-gradient(from 202deg at 81.78% 23.22%, #4629F2 0deg, #13C6FF 125.62500357627869deg, #B94DFB 215.62499284744263deg, #FF53EE 294.3749928474426deg, #F3B960 360deg), #D9D9D9; */
+    ;
 }
 
 .list-item-photo {
-    background: #cccccc;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     margin-right: 15px;
     height: 44px;
     width: 44px;
@@ -168,15 +173,16 @@
 /* text */
 .bold-text-white {
     color: white;
-    font-size: 18px;
+    margin-bottom: 4px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 }
 
 .medium-text-white {
-    color: white;
-    font-size: 16px;
+    color: rgb(223, 223, 223);
+    font-size: 12px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -184,7 +190,8 @@
 
 .bold-text {
     color: #52585D;
-    font-size: 18px;
+    margin-bottom: 4px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -192,7 +199,7 @@
 
 .medium-text {
     color: #96A9BA;
-    font-size: 16px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;

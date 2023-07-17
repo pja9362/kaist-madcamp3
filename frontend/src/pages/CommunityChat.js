@@ -1,15 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Header from '../components/Header';
-import { SOCKET_SEND, SOCKET_RECEIVE, SOCKET_URL } from "../service/socket";
+import { SOCKET_SEND, SOCKET_RECEIVE, SOCKET_URL, BACK_ENDPOINT } from "../service/socket";
 import './Community.css';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import { io } from "socket.io-client";
 
-const CommunityChat = ({ tokenId }) => {
+const CommunityChat = ({ tokenId, roomId }) => {
     const [inputText, setInputText] = useState('');
     const [messages, setMessages] = useState([]);
-    const roomId = 1;
     const socket = io(SOCKET_URL, {
         query: { userId: tokenId },
     });
@@ -30,6 +29,29 @@ const CommunityChat = ({ tokenId }) => {
             socket.disconnect();
         };
     }, []);
+
+    useEffect(() => {
+        fetchChatMessages();
+    }, []);
+
+    const fetchChatMessages = async () => {
+        const PORT = 80;
+        const ROUTER_PATH = '/chatRoom';
+        const API_URL = `http://${BACK_ENDPOINT}:${PORT}${ROUTER_PATH}/${roomId}`;
+
+        try {
+            const response = await fetch(`${API_URL}`, {method: 'GET'});
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setMessages(data.messages.map((data) => ({ from: data.nftTokenId
+                , message: data.contents })));
+            console.log('room messages: ', data.messages);
+        } catch (error) {
+        console.error('Error fetching room messages: ', error);
+        }
+    };
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
