@@ -1,4 +1,6 @@
-export default {
+const config = {
     networkVersionSepolia: '11155111',
-    contractAddress: '0x822e127A224A6c9efd8089C79E35dc4E4A051be3', 
-  };
+    contractAddress: '0x81Bd460b9b5f4bCCD026aC2a14b2E32172397Ad8', 
+};
+
+export default config;

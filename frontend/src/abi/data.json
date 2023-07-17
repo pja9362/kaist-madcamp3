@@ -120,7 +120,6 @@
     "name": "RegisterNFT",
     "type": "event"
   },
-  { "anonymous": false, "inputs": [], "name": "Reset", "type": "event" },
   {
     "anonymous": false,
     "inputs": [
@@ -157,6 +156,19 @@
       }
     ],
     "name": "UnregisterNFT",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "unLock",
     "type": "event"
   },
   {

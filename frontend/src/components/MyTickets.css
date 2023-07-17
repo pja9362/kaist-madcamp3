@@ -103,9 +103,6 @@
   transform: rotateY(0deg);
 }
 
-.carousel-item.active {
-  opacity: 0;
-}
 
 .carousel-item .front,
 .carousel-item .back {

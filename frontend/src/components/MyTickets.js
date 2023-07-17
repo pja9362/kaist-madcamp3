@@ -1,12 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Header from '../components/Header';
-import concert1 from '../images/concert1.jpeg';
 import concert2 from '../images/concert2.jpeg';
-import concert3 from '../images/concert3.jpeg';
 import concert4 from '../images/concert4.jpeg';
-import concert5 from '../images/concert5.jpeg';
-import concert6 from '../images/concert6.jpeg';
-import concert7 from '../images/concert7.png';
+import myTicket1 from '../images/ticket2.png';
+import myTicket2 from '../images/ticket3.png';
+
 import mainconcert from '../images/mainconcert.png';
 import backImage from '../images/back_ticket.png';
 import './AllTickets.css';
@@ -63,8 +61,8 @@ const MyTickets = () => {
       
 
     const slides = [
-        { id: 4, image: concert4, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'},
-        { id: 2, image: concert2, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원' },
+        { id: 4, image: myTicket2, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'},
+        { id: 2, image: myTicket1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원' },
         { id: 8, image: mainconcert, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 100,000원' },
     ];
 
