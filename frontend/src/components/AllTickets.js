@@ -29,6 +29,7 @@ const AllTickets = () => {
       const ROUTER_PATH = '/meta-stage-web3/api/v1';
 
       const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}`;
+      console.log("API_URL", API_URL);
 
       try {
         const response = await fetch(`${API_URL}/nft-count`);
@@ -49,14 +50,14 @@ const AllTickets = () => {
     }, []);
 
     const slides = [
-        { id: 4, image: concert4, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'},
-        { id: 2, image: concert2, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원' },
-        { id: 7, image: concert7, title: 'BLACKPINK 단독 콘서트', date: '2023.7.30', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원'},
-        { id: 8, image: mainconcert, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 100,000원' },
-        { id: 6, image: concert6, title: 'ITZY 월드투어', date: '2023.8.8', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원'},
-        { id: 1, image: concert1, title: 'IM HERO 임영웅 콘서트', date: '2023.8.10', place: '대전컨벤션센터 제2전시장', price: '스페셜석 : 100,000원' },
-        { id: 3, image: concert3, title: '세븐틴 월드투어 BE THE SUN', date: '2023.7.31', place: '서울 고척스카이돔', price: '스페셜석 : 100,000원'  },
-        { id: 5, image: concert5, title: 'WINNER 단독 콘서트', date: '2023.7.30', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 100,000원' },
+        { id: 4, image: concert4, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
+        { id: 2, image: concert2, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
+        { id: 7, image: concert7, title: 'BLACKPINK 단독 콘서트', date: '2023.7.30', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH'},
+        { id: 8, image: mainconcert, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
+        { id: 6, image: concert6, title: 'ITZY 월드투어', date: '2023.8.8', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH'},
+        { id: 1, image: concert1, title: 'IM HERO 임영웅 콘서트', date: '2023.8.10', place: '대전컨벤션센터 제2전시장', price: '스페셜석 : 0.001 ETH' },
+        { id: 3, image: concert3, title: '세븐틴 월드투어 BE THE SUN', date: '2023.7.31', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'  },
+        { id: 5, image: concert5, title: 'WINNER 단독 콘서트', date: '2023.7.30', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
     ];
 
     const nextSlide = () => {
