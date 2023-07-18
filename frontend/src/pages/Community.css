@@ -12,7 +12,7 @@
     width: 100vw;
     display: flex;
     flex-direction: column;
-    background-color: #18180D; 
+    background-color: #18180D;
 }
 
 .chat-border {
@@ -49,6 +49,7 @@
 }
 
 .chat-list-box {
+    background: #20344b;
     height: 100%;
 }
 
@@ -67,7 +68,10 @@
     padding: 15px;
     margin-top: 10px;
     height: 100%;
-    background: var(--base-color);
+    /* background: var(--base-color); */
+    background: #232526;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3b3b3f, #1a1c1d);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3b3b3f, #1a1c1d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border-radius: 14px 14px 0px 0px;
     z-index: 5;
 }
@@ -96,7 +100,7 @@
     background: var(--point-color);
     color: #FDFDFE;
     font-size: 12px;
-    box-shadow: 0px 8px 40px 0px rgba(101, 136, 222, 0.8);
+    box-shadow: 0px 8px 40px 0px rgba(101, 136, 222, 0.5);
 }
 
 .chat-mode {
@@ -119,7 +123,9 @@
     /* height: 100vh; */
     display: flex;
     flex-direction: column;
-
+    background: #20344b;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #20344b, #080c14);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #20344b, #080c14); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     overflow: hidden;
 }
 
@@ -210,6 +216,19 @@
     line-height: normal;
 }
 
+.chat-time{
+    margin: 0 10px;
+    color: #8f9999;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: normal;
+    align-self: end;
+    min-width: 56px;
+}
+
+
+/* chat input */
+
 .chat-input-box {
     flex: 1;
     box-sizing: border-box;
@@ -240,12 +259,12 @@
 /* chat-message */
 
 .chat-name{
-    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 3px;
     margin: 0 63px;
-    color: #52585D;
+    color: #c1c1c1;
     font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
+    font-weight: 800;
     line-height: normal;
 }
 
@@ -294,9 +313,14 @@
 .chat-message-mine{
     margin-right: 15px;
     border-radius: 14px 0px 14px 14px;
-    background: #97FEED;
+    color: #fff;
+    font-weight: 600;
+    background: #7f7fd5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #7f7fd5, #86a8e7, #75beb8); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #7f7fd5, #86a8e7, #75beb8);
     width: fit-content;
     padding: 12px 16px;
+
 }
 
 /* heart button */
