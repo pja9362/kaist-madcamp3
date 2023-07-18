@@ -308,10 +308,11 @@ to {
 .chat-photo {
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
+    width: 44px;
+    height: 44px;
     box-sizing: border-box;
     background: #cccccc;
-    height: 44px;
     min-width: 44px !important;
     border-radius: 44px;
     border: 2px solid var(--point-color);

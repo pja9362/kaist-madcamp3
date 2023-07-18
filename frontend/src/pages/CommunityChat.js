@@ -6,12 +6,31 @@ import { io } from "socket.io-client";
 import { BACK_ENDPOINT, SOCKET_RECEIVE, SOCKET_SEND, SOCKET_URL } from "../service/socket";
 import './Community.css';
 import { createRoot } from 'react-dom';
+import { fetchTicketImage } from '../services/api';
+import { Avatar } from '@mui/material'; 
 
 const CommunityChat = ({ tokenId, roomId }) => {
     const [inputText, setInputText] = useState('');
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
     const lastMessageRef = useRef(null);
+    const [ownerAddress, setOwnerAddress] = useState('');
+
+    useEffect(() => {
+        setOwnerAddress(localStorage.getItem('ownerAddress'));
+    }, []);
+
+    // my profile image
+    const [senderProfile, setSenderProfile] = useState(null);
+
+    useEffect(() => {
+        fetchTicketImage(ownerAddress).then((data) => {
+            const photoUri = data?.photoUri; 
+            if (photoUri !== '') {
+                setSenderProfile(photoUri);
+            }
+        });
+    }, [ownerAddress]);
 
 
     useEffect(() => {
@@ -31,7 +50,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
             if (lastMessageRef.current && messages.length > 0) {
                 setTimeout(() => {
                     lastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-                }, 0);
+                }, 100);
             }
         };
 
@@ -50,7 +69,6 @@ const CommunityChat = ({ tokenId, roomId }) => {
             socket.off(SOCKET_RECEIVE.MESSAGE);
             socket.on(SOCKET_RECEIVE.MESSAGE, (data) => {
                 setMessages((prevMessages) => [...prevMessages, data]);
-                console.log(messages);
             });
         }
     }, [roomId, socket]);
@@ -81,15 +99,15 @@ const CommunityChat = ({ tokenId, roomId }) => {
                 const data = await response.json();
                 setMessages(data.messages.map((data) => ({
                     type: data.type, profileImage: data.profileImage,
-                    from: data.nftTokenId
-                    , message: data.contents, createdAt: formatTime(data.createdAt)
+                    from: data.nftTokenId, 
+                    message: data.contents, 
+                    createdAt: formatTime(data.createdAt)
                 })));
                 console.log('room messages: ', data.messages);
             } catch (error) {
                 console.error('Error fetching room messages: ', error);
             }
         };
-
         fetchChatMessages();
 
     }, [roomId]);
@@ -101,7 +119,6 @@ const CommunityChat = ({ tokenId, roomId }) => {
         const API_URL = `http://${BACK_ENDPOINT}:${PORT}${ROUTER_PATH}`;
         const formData = new FormData();
         formData.append('file', file);
-        console.log(file);
 
         try {
             const response = await fetch(`${API_URL}`, { method: 'POST', body: formData });
@@ -109,7 +126,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            socket.emit(SOCKET_SEND.MESSAGE, roomId, 1, data.url, 'https://bafybeicojxomahybkfhn2iuk2ntpsqk5opnpqwbcfx4u7ni45djlu2edi4.ipfs.nftstorage.link/');
+            socket.emit(SOCKET_SEND.MESSAGE, roomId, 1, data.url, senderProfile);
         } catch (error) {
             console.error('Error fetching room messages: ', error);
         }
@@ -128,7 +145,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
 
     const handleClickButton = (event) => {
         if(inputText === '') return;
-        socket.emit(SOCKET_SEND.MESSAGE, roomId, 0, inputText, 'https://bafybeicojxomahybkfhn2iuk2ntpsqk5opnpqwbcfx4u7ni45djlu2edi4.ipfs.nftstorage.link/');
+        socket.emit(SOCKET_SEND.MESSAGE, roomId, 0, inputText, senderProfile);
         setInputText('');
     };
 
@@ -238,7 +255,13 @@ const CommunityChat = ({ tokenId, roomId }) => {
                                         <div key={index}>
                                             <div className='chat-name'>{formatString(data.from)}</div>
                                             <div className='flex-align-other'>
-                                                <div className='chat-photo' style={data.profileImage&&{ backgroundImage: `url(${data.profileImage})` }}></div>
+                                                {data.profileImage && (
+                                                    <Avatar
+                                                        src={data.profileImage}
+                                                        alt={`User Avatar`}
+                                                        sx={{ width: 44, height: 44, borderRadius: 44, border: '2px solid var(--point-color)' }}
+                                                    />
+                                                )}
                                                 {
                                                     data.type === 1
                                                     ?  <div className='chat-message'><img src={data.message} alt="image" style={{ width: '200px' }} /></div>

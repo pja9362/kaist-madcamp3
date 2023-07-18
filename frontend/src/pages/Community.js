@@ -4,6 +4,7 @@ import './Community.css';
 import { BACK_ENDPOINT } from "../service/socket";
 import CommunityChat from './CommunityChat';
 import backImage from '../images/background_grad.png';
+import defaultProfile from '../images/default_profile.png';
 import { fetchTicketImage } from '../services/api';
 
 const Community = () => {
@@ -14,10 +15,7 @@ const Community = () => {
     useEffect(() => {
         fetchChatRoomList();
       }, []);
-      
-    useEffect(() => {
-        setOwnerAddress(localStorage.getItem('ownerAddress'));
-    }, []);
+
     
     // 채팅방 입장 Register MetaMask Call 로직
     // const registerMetamaskCall = async () => {
@@ -88,18 +86,18 @@ const Community = () => {
             // my profile image
     const [myProfile, setMyProfile] = useState(null);
 
-  useEffect(() => {
-      setOwnerAddress(localStorage.getItem('ownerAddress'));
-  }, []); 
+    useEffect(() => {
+        setOwnerAddress(localStorage.getItem('ownerAddress'));
+    }, []); 
 
-  useEffect(() => {
-      fetchTicketImage(ownerAddress).then((data) => {
-          const photoUri = data?.photoUri; 
-          if (photoUri !== '') {
-              setMyProfile(photoUri);
-          }
-      });
-  }, [ownerAddress]);
+    useEffect(() => {
+        fetchTicketImage(ownerAddress).then((data) => {
+            const photoUri = data?.photoUri; 
+            if (photoUri !== '') {
+                setMyProfile(photoUri);
+            }
+        });
+    }, [ownerAddress]);
 
     return (
         <div className='root-container'>
@@ -108,7 +106,7 @@ const Community = () => {
                 <div className='chat-list-box'>
                     <div className='chat-list-header' style={{backgroundImage: `url(${backImage})`}}>
                         <div className='flex-row'>
-                            <div className='list-item-photo' style={{backgroundImage: `url(${myProfile})`}}></div>
+                            <div className='list-item-photo' style={{backgroundImage: `url(${myProfile || defaultProfile})`}}></div>
                             <div className='flex-column'>
                                 <div className='bold-text'>{formatString(ownerAddress)}</div>
                                 <div className='medium-text'>내 프로필</div>
