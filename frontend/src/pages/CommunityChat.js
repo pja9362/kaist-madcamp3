@@ -49,9 +49,10 @@ const CommunityChat = ({ tokenId, roomId }) => {
     useEffect(() => {
         fetchChatMessages();
         //messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }, []);
+    }, [roomId]);
 
     const fetchChatMessages = async () => {
+        if(roomId === -1) return;
         const PORT = 80;
         const ROUTER_PATH = '/chatRoom';
         const API_URL = `http://${BACK_ENDPOINT}:${PORT}${ROUTER_PATH}/${roomId}`;
@@ -139,13 +140,18 @@ const CommunityChat = ({ tokenId, roomId }) => {
     };
 
     return (
-        <div className='chat-box' >
+        roomId === -1
+            ? <div className='chat-box' >
+                <div className='no-room-message'> No room selected </div>
+                </div>
+        : <div className='chat-box' >
             <div className='chat-header'>
                 <div className='chat-mode-box '>
                     <div className='chat-mode-selected'>Live</div>
                     <div className='chat-mode'>Offline</div>
                 </div>
             </div>
+            <div className='flex-column'>
             <div className='chat-room-inside'>
                 <div className='chat-content'>
                     {messages.map((data, index) => (
@@ -185,6 +191,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                 <div className='chat-input-button' style={{borderRadius: '20px', padding: '1px 2px'}} onClick={handleClickButton} onKeyDown={handleClickButton}>
                     <SendSharpIcon style={{ marginRight: '10px' }}/>
                     <div>Send</div>
+                </div>
                 </div>
             </div>
         </div>
