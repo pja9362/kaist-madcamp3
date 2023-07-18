@@ -5,14 +5,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
 import { BACK_ENDPOINT, SOCKET_RECEIVE, SOCKET_SEND, SOCKET_URL } from "../service/socket";
 import './Community.css';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom';
 
 const CommunityChat = ({ tokenId, roomId }) => {
     const [inputText, setInputText] = useState('');
     const [messages, setMessages] = useState([]);
-    const messageEndRef = useRef(null);
     const [socket, setSocket] = useState(null);
     const lastMessageRef = useRef(null);
 
