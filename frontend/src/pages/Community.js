@@ -11,7 +11,7 @@ import backImage from '../images/background_grad.png';
 const Community = () => {
     const [ownerAddress, setOwnerAddress] = useState('');
     const [chatRoomList, setChatRoomList] = useState([]);
-    const [selectedRoomId, setSelectedRoomId] = useState(1);
+    const [selectedRoomId, setSelectedRoomId] = useState(-1);
 
     useEffect(() => {
         fetchChatRoomList();
@@ -80,7 +80,7 @@ const Community = () => {
                                     </div>
                                 </div>
                                 :
-                                <div key={index} className='list-item-box'>
+                                <div key={index} className='list-item-box' onClick={()=>setSelectedRoomId(data.id)}>
                                 <div className='flex-row'>
                                     <div className='list-item-photo' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div>
                                     <div className='flex-column'>
@@ -92,7 +92,7 @@ const Community = () => {
                         ))}
                     </div>
                 </div>
-                <CommunityChat roomId={1} tokenId={"ownerAddress"}/>
+                <CommunityChat roomId={selectedRoomId} tokenId={"ownerAddress"} />
             </div>
         </div>
     );
