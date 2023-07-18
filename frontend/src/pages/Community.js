@@ -15,12 +15,12 @@ const Community = () => {
 
     useEffect(() => {
         fetchChatRoomList();
-    }, []);
-
+      }, []);
+      
     useEffect(() => {
-        const address = localStorage.getItem('ownerAddress');
-        setOwnerAddress(address);
+        setOwnerAddress(localStorage.getItem('ownerAddress'));
     }, []);
+      
 
     const fetchChatRoomList = async () => {
         const PORT = 80;
@@ -35,7 +35,6 @@ const Community = () => {
             }
             const data = await response.json();
             setChatRoomList(data);
-            //   const { nftCount } = data;
             console.log('room List:', data);
             } catch (error) {
             console.error('Error fetching roomList:', error);
@@ -92,7 +91,7 @@ const Community = () => {
                         ))}
                     </div>
                 </div>
-                <CommunityChat roomId={selectedRoomId} tokenId={"ownerAddress"} />
+                <CommunityChat roomId={selectedRoomId} tokenId={ownerAddress} />
             </div>
         </div>
     );

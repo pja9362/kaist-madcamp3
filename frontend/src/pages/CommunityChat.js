@@ -14,62 +14,60 @@ const CommunityChat = ({ tokenId, roomId }) => {
     const [messages, setMessages] = useState([]);
     const messageEndRef = useRef(null);
     const [socket, setSocket] = useState(null);
-    // const socket = io(SOCKET_URL, {
-    //     query: { userId: tokenId },
-    // });
-
-
+    
     useEffect(() => {
         if (socket) {
-            socket.on(SOCKET_RECEIVE.CONNECT, () => {
-                console.log("socket server connected.");
-            });
-            socket.on(SOCKET_RECEIVE.DISCONNECT, () => {
-                console.log("socket server disconnected.");
-            });
-            socket.emit(SOCKET_SEND.ROOM_IN, roomId);
-            socket.on(SOCKET_RECEIVE.MESSAGE, (data) => {
-                console.log(data);
-                setMessages((prevMessages) => [...prevMessages, data]);
-                //messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
-            });
+          socket.on(SOCKET_RECEIVE.CONNECT, () => {
+            console.log("socket server connected.");
+          });
+          socket.on(SOCKET_RECEIVE.DISCONNECT, () => {
+            console.log("socket server disconnected.");
+          });
+          socket.emit(SOCKET_SEND.ROOM_IN, roomId);
+          socket.off(SOCKET_RECEIVE.MESSAGE);
+          socket.on(SOCKET_RECEIVE.MESSAGE, (data) => {
+            console.log(data);
+            setMessages((prevMessages) => [...prevMessages, data]);
+          });
         }
-    }, [socket, roomId]);
-    useEffect(() => {
+      }, [roomId, socket]);
+      
+      useEffect(() => {
         const newSocket = io(SOCKET_URL, {
-            query: { userId: tokenId },
+          query: { userId: tokenId },
         });
         setSocket(newSocket);
-
+      
         return () => {
-            newSocket.disconnect();
+          newSocket.disconnect();
         };
-    }, []);
+      }, [tokenId]);      
 
     useEffect(() => {
-        fetchChatMessages();
-        //messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }, [roomId]);
-
-    const fetchChatMessages = async () => {
-        if(roomId === -1) return;
-        const PORT = 80;
-        const ROUTER_PATH = '/chatRoom';
-        const API_URL = `http://${BACK_ENDPOINT}:${PORT}${ROUTER_PATH}/${roomId}`;
-
-        try {
+        const fetchChatMessages = async () => {
+          if(roomId === -1) return;
+          const PORT = 80;
+          const ROUTER_PATH = '/chatRoom';
+          const API_URL = `http://${BACK_ENDPOINT}:${PORT}${ROUTER_PATH}/${roomId}`;
+      
+          try {
             const response = await fetch(`${API_URL}`, {method: 'GET'});
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+              throw new Error('Network response was not ok');
             }
             const data = await response.json();
             setMessages(data.messages.map((data) => ({ from: data.nftTokenId
-                , message: data.contents, createdAt: formatTime(data.createdAt) })));
+              , message: data.contents, createdAt: formatTime(data.createdAt) })));
             console.log('room messages: ', data.messages);
-        } catch (error) {
-        console.error('Error fetching room messages: ', error);
-        }
-    };
+          } catch (error) {
+            console.error('Error fetching room messages: ', error);
+          }
+        };
+      
+        fetchChatMessages();
+        //messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }, [roomId]);
+      
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
