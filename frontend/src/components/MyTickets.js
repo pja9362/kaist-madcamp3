@@ -43,36 +43,36 @@ const MyTickets = () => {
     ];
 
     // 함수로 이미지를 가져오기
-  // const fetchTicketImage = async (tokenId) => {
-  //   console.log("FETCHING TICKET IMAGE", tokenId);
-  //   const IP_ADDRESS = '172.10.5.130';
-  //   const PORT = 80;
-  //   const ROUTER_PATH = '/meta-stage-web3/api/v1';
-  //   const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
+  const fetchTicketImage = async (tokenId) => {
+    console.log("FETCHING TICKET IMAGE", tokenId);
+    const IP_ADDRESS = '172.10.5.130';
+    const PORT = 80;
+    const ROUTER_PATH = '/meta-stage-web3/api/v1';
+    const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
 
-  //   console.log("API_URL", API_URL)
-  //   try {
-  //     const response = await fetch(API_URL);
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     const data = await response.json();
-  //     const { photoUri } = data;
-  //     return photoUri;
-  //   } catch (error) {
-  //     console.error('Error fetching ticket image:', error);
-  //     return null;
-  //   }
-  // };
+    console.log("API_URL", API_URL)
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      const { photoUri } = data;
+      return photoUri;
+    } catch (error) {
+      console.error('Error fetching ticket image:', error);
+      return null;
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchTicketImage(config.contractAddress)
-  //   .then((photoUri) => {
-  //     console.log(photoUri);
-  //     alert("FETCHED TICKET IMAGE");
-  //     setTicketImage(photoUri);
-  //   });
-  // }, []);
+  useEffect(() => {
+    fetchTicketImage(config.contractAddress)
+    .then((photoUri) => {
+      console.log(photoUri);
+      alert("FETCHED TICKET IMAGE");
+      setTicketImage(photoUri);
+    });
+  }, []);
 
     const nextSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide === slides.length - 1 ? 0 : prevSlide + 1));
