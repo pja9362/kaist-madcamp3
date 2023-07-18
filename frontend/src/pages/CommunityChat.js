@@ -50,7 +50,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
             if (lastMessageRef.current && messages.length > 0) {
                 setTimeout(() => {
                     lastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-                }, 0);
+                }, 100);
             }
         };
 
@@ -69,7 +69,6 @@ const CommunityChat = ({ tokenId, roomId }) => {
             socket.off(SOCKET_RECEIVE.MESSAGE);
             socket.on(SOCKET_RECEIVE.MESSAGE, (data) => {
                 setMessages((prevMessages) => [...prevMessages, data]);
-                console.log(messages);
             });
         }
     }, [roomId, socket]);
@@ -100,15 +99,15 @@ const CommunityChat = ({ tokenId, roomId }) => {
                 const data = await response.json();
                 setMessages(data.messages.map((data) => ({
                     type: data.type, profileImage: data.profileImage,
-                    from: data.nftTokenId
-                    , message: data.contents, createdAt: formatTime(data.createdAt)
+                    from: data.nftTokenId, 
+                    message: data.contents, 
+                    createdAt: formatTime(data.createdAt)
                 })));
                 console.log('room messages: ', data.messages);
             } catch (error) {
                 console.error('Error fetching room messages: ', error);
             }
         };
-
         fetchChatMessages();
 
     }, [roomId]);
@@ -120,7 +119,6 @@ const CommunityChat = ({ tokenId, roomId }) => {
         const API_URL = `http://${BACK_ENDPOINT}:${PORT}${ROUTER_PATH}`;
         const formData = new FormData();
         formData.append('file', file);
-        console.log(file);
 
         try {
             const response = await fetch(`${API_URL}`, { method: 'POST', body: formData });
