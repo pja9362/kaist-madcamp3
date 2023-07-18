@@ -106,7 +106,6 @@ const AllTickets = () => {
                   </div>
                   <div className="back">
                       <div className='back-content'>
-                            {/* <Typography className='ticket-count' sx={{ color: 'white', fontSize: '11px', mt: '5px' }}>{ticketCounts[index]}/30</Typography> */}
                             <Typography className='ticket-count' sx={{ color: 'white', fontSize: '11px', mt: '5px' }}>{30-ticketCount}/30</Typography>
                             <Button onClick={() => handlePurchaseClick(slide)} variant="outlined" sx={{color: 'white', fontSize: '12px', p: '2px 10px', border: '1px solid #fff'}} className="buy-button">
                                 티켓 구매

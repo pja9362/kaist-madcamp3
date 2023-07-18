@@ -14,7 +14,7 @@ import './AllTickets.css';
 import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import TicketModal from './TicketModal';
+
 
 const MyTickets = () => {
     const carouselRef = useRef(null);
@@ -33,6 +33,8 @@ const MyTickets = () => {
       
     const [ticketImage, setTicketImage] = useState('');
     const [photoImage, setPhotoImage] = useState('');
+    const [photoName, setPhotoName] = useState('');
+    const [photoDesc, setPhotoDesc] = useState('');
 
     const [ownerAddress, setOwnerAddress] = useState('');
 
@@ -57,7 +59,8 @@ const MyTickets = () => {
         }
         const data = await response.json();
         console.log('ALL DATA', data);
-        if(data.photoUri !== '') return { ticketUri: data.ticketUri, photoUri: data.photoUri };
+        console.log("tokenName : ", data.nftName, "tokenDescription : ", data.nftDescription);
+        if(data.photoUri !== '') return { ticketUri: data.ticketUri, photoUri: data.photoUri, photoName: data.nftName, photoDesc: data.nftDescription };
         else return data.ticketUri;
 
       } catch (error) {
@@ -71,10 +74,12 @@ const MyTickets = () => {
     }, []); 
 
     useEffect(() => {
-      fetchTicketImage(ownerAddress).then(({ticketUri, photoUri}) => {
+      fetchTicketImage(ownerAddress).then(({ticketUri, photoUri, photoName, photoDesc}) => {
           setTicketImage(ticketUri);
           if(photoUri !== '') {
             setPhotoImage(photoUri);
+            setPhotoName(photoName);
+            setPhotoDesc(photoDesc);
           }
       });
     }, [ownerAddress]);
@@ -136,6 +141,14 @@ const MyTickets = () => {
                           <div className='back-content'>
                             <img src={slide.backImage} alt={`Concert ${slide.id}`}/> 
                           </div>
+                          {
+                              slide.id === 3 && slide.backImage === photoImage ?
+                              <div className='back-text' style={{fontSize: '14px'}}>
+                                <div style={{color: '#fff'}}>{photoName}</div>
+                                <div style={{color: '#fff'}}>{photoDesc}</div>
+                              </div>
+                              : null
+                          }
                       </div>
                     </div>
                 </div>
