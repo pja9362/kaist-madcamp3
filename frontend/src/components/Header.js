@@ -7,6 +7,8 @@ import OpenseaIcon from '../images/icon_opensea.png';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import logo from '../images/logo_black.png';
+import data from '../abi/data.json';
+import config from '../config/config';
 
 const Header = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -14,6 +16,8 @@ const Header = () => {
     const [walletBalance, setWalletBalance] = useState('');
     const [isLogin, setIsLogin] = useState(false);
 
+    const contractAddress = config.contractAddress;
+    
     const handleOpenseaClick = () => {
         window.open('https://opensea.io', '_blank');
     };
@@ -29,6 +33,7 @@ const Header = () => {
                 setAddress(accounts[0]);
                 // Set login state to true
                 setIsLogin(true);
+                localStorage.setItem('ownerAddress', accounts[0]);
             } else {
                 // Metamask is not available
                 alert('Please install and connect Metamask to login.');
@@ -40,7 +45,7 @@ const Header = () => {
         }
     };
 
-        // Check if Metamask is already connected on initial load
+    // Check if Metamask is already connected on initial load
     useEffect(() => {
         const checkMetamaskConnection = async () => {
             if (typeof window.ethereum !== 'undefined') {
@@ -49,6 +54,8 @@ const Header = () => {
                     if (accounts.length > 0) {
                         setAddress(accounts[0]);
                         setIsLogin(true);
+                        localStorage.setItem('ownerAddress', accounts[0]);
+                        console.log(address);
                     }
                 } catch (err) {
                     console.error(err);
@@ -59,6 +66,34 @@ const Header = () => {
         checkMetamaskConnection();
     }, []);
 
+
+    const handleConvertTicket = async () => {
+        // 메타마스크와 연동하는 코드 추가
+        try {
+            // Web3 인스턴스 생성
+            const web3 = new Web3(window.ethereum);
+            // 스마트 컨트랙트 인스턴스 생성
+            const contract = new web3.eth.Contract(data, contractAddress);
+            
+            console.log(contract);
+            
+            // 사용자의 지갑 주소 가져오기
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const account = accounts[0];
+            // 스마트 컨트랙트의 함수 호출
+            const receipt = await contract.methods.transformToPhoto()
+            .send({ from: account });
+           // 트랜잭션이 성공적으로 마이닝된 경우에만 처리
+            if (receipt.status) {
+                // 예매 완료 알림
+                alert('변환 완료!');
+            }
+
+            // NFT 개수 업데이트
+        } catch (error) {
+            console.error(error);
+        }
+};
     const handleDrawerOpen = () => {
         setIsDrawerOpen(true);
     };
@@ -137,11 +172,11 @@ const Header = () => {
             </ListItem>
 
             {/* 프로필 수정 */}
-            {address === 'Admin' ? (
-                <Button variant="contained" sx={{mt: '30%'}}>
+            {address === '0x40a3371a6d710bde54a2e0003c741838d142896b' ? (
+                <Button variant="contained" sx={{mt: '30%'}} onClick={handleConvertTicket}>
                     <Typography>포토카드 변환</Typography>
                 </Button>
-            ) : null}
+            ) : null }
         </List>
         </div>
     );

@@ -14,6 +14,7 @@ import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TicketModal from './TicketModal';
+import { fetchUpdatedTicketCount } from '../services/api';
 
 const AllTickets = () => {
     const carouselRef = useRef(null);
@@ -23,30 +24,12 @@ const AllTickets = () => {
   
     const [ticketCount, setTicketCount] = useState('');
 
-    const fetchUpdatedTicketCount = async () => {
-      const IP_ADDRESS = '172.10.5.130';
-      const PORT = 80;
-      const ROUTER_PATH = '/meta-stage-web3/api/v1';
-
-      const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}`;
-      console.log("API_URL", API_URL);
-
-      try {
-        const response = await fetch(`${API_URL}/nft-count`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        const { nftCount } = data;
-        console.log('nftCount:', data);
-        setTicketCount(nftCount);
-      } catch (error) {
-        console.error('Error fetching nftCount:', error);
-      }
-    };
-
     useEffect(() => {
-      fetchUpdatedTicketCount();
+      const fetchTicketCounts = async () => {
+        const nftCount = await fetchUpdatedTicketCount();
+        if(nftCount) setTicketCount(nftCount);
+      };
+      fetchTicketCounts();
     }, []);
 
     const slides = [
@@ -151,7 +134,7 @@ const AllTickets = () => {
           open={isModalOpen}
           onClose={handleCloseModal}
           concert={selectedConcert}
-          
+          setTicketCount={setTicketCount}
         />
       </>
   );
