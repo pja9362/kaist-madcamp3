@@ -49,7 +49,7 @@ const Community = () => {
     
             const prefix = str.slice(0, 5);
             const suffix = str.slice(-3);
-    
+
             return `${prefix}...${suffix}`;
         };
 
