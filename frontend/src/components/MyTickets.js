@@ -39,7 +39,7 @@ const MyTickets = () => {
       const slides = [
           { id: 1, image: myTicket2, backImage: myPhoto2, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
           { id: 2, image: myTicket1, backImage: myPhoto1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
-          { id: 3, image: ticketImage, backImage: photoImage !== '' ? photoImage : myPhoto3, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
+          { id: 3, image: ticketImage, backImage: photoImage !== null ? photoImage : myPhoto3, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
       ];
 
       // 함수로 이미지를 가져오기
@@ -56,8 +56,7 @@ const MyTickets = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('ALL DATA', data.photoUri);
-        console.log('ticketUri', data.ticketUri);
+        console.log('ALL DATA', data);
         if(data.photoUri !== '') return { ticketUri: data.ticketUri, photoUri: data.photoUri };
         else return data.ticketUri;
 
