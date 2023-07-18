@@ -8,7 +8,6 @@ import { fetchUpdatedTicketCount } from '../services/api';
 const TicketModal = ({ open, onClose, concert, setTicketCount }) => {
 
     const contractAddress = config.contractAddress;
-    const [isMinting, setIsMinting]= useState(false);
 
     const handlePurchaseConfirmation = async () => {
             // 메타마스크와 연동하는 코드 추가
