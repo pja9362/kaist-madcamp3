@@ -9,12 +9,17 @@ import backImage from '../images/background_grad.png';
 
 
 const Community = () => {
-    const [ownerAddress, setOwnerAddress] = useState('근원');
+    const [ownerAddress, setOwnerAddress] = useState('');
     const [chatRoomList, setChatRoomList] = useState([]);
     const [selectedRoomId, setSelectedRoomId] = useState(1);
 
     useEffect(() => {
         fetchChatRoomList();
+    }, []);
+
+    useEffect(() => {
+        const address = localStorage.getItem('ownerAddress');
+        setOwnerAddress(address);
     }, []);
 
     const fetchChatRoomList = async () => {
@@ -37,6 +42,16 @@ const Community = () => {
             }
         };
 
+        const formatString = (str) => {
+            if (!str || str.length < 8) {
+                return '';
+            }
+    
+            const prefix = str.slice(0, 5);
+            const suffix = str.slice(-3);
+    
+            return `${prefix}...${suffix}`;
+        };
 
     return (
         <div className='root-container'>
@@ -47,7 +62,7 @@ const Community = () => {
                         <div className='flex-row'>
                             <div className='list-item-photo'></div>
                             <div className='flex-column'>
-                                <div className='bold-text'>name</div>
+                                <div className='bold-text'>{formatString(ownerAddress)}</div>
                                 <div className='medium-text'>message</div>
                             </div>
                         </div>
@@ -59,7 +74,7 @@ const Community = () => {
                                     <div className='flex-row'>
                                         <div className='list-item-photo-selected' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div>
                                         <div className='flex-column'>
-                                            <div className='bold-text-white'>{ data.name }</div>
+                                            <div className='bold-text-white'>{data.name}</div>
                                             <div className='medium-text-white'>{ data.createdAt.split('T')[0] }</div>
                                         </div>
                                     </div>
@@ -69,7 +84,7 @@ const Community = () => {
                                 <div className='flex-row'>
                                     <div className='list-item-photo' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div>
                                     <div className='flex-column'>
-                                        <div className='bold-text'>{ data.name }</div>
+                                        <div className='bold-text'>{data.name}</div>
                                         <div className='medium-text'>{ data.createdAt.split('T')[0] }</div>
                                     </div>
                                 </div>

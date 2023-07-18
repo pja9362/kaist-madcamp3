@@ -75,26 +75,6 @@ const CommunityChat = ({ tokenId, roomId }) => {
 
     const [isHeartClicked, setIsHeartClicked] = useState(false);
 
-    // const handleHeartButtonClick = () => {
-    //     const groupSize = 3;
-    //     const chatBox = document.querySelector('.chat-box');
-    //     const chatBoxRect = chatBox.getBoundingClientRect();
-    //     for (let i = 0; i < 10; i++) {
-    //         setTimeout(() => {
-    //             const heart = document.createElement('span');
-    //             ReactDOM.render(<FavoriteIcon style={{ color: `hsla(${Math.random() * 30}, 100%, 50%, ${Math.random()})`, fontSize: `${Math.random() * 24 + 12}px` }} />, heart);
-    //             heart.classList.add('heart');
-    //             heart.style.left = `${Math.random() * (chatBoxRect.right - chatBoxRect.left) + chatBoxRect.left}px`;
-    //             heart.style.bottom = `${window.innerHeight - chatBoxRect.bottom}px`;
-    //             heart.style.transform = `rotate(${Math.random() * 360}deg)`;
-    //             document.body.appendChild(heart);
-    //             setTimeout(() => {
-    //                 heart.remove();
-    //                 setIsHeartClicked(false);
-    //             }, 3000);
-    //         }, Math.floor(i / groupSize) * 300);
-    //     }
-    // };
     function formatTime(timestamp) {
         const date = new Date(timestamp);
         const hours = date.getHours();
@@ -134,6 +114,16 @@ const CommunityChat = ({ tokenId, roomId }) => {
         }
     };
 
+    const formatString = (str) => {
+        if (!str || str.length < 8) {
+            return str;
+        }
+
+        const prefix = str.slice(0, 5);
+        const suffix = str.slice(-3);
+
+        return `${prefix}...${suffix}`;
+    };
 
     return (
         <div className='chat-box' >
@@ -160,7 +150,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                                 </div>
                             :
                             <div key={index}>
-                            <div className='chat-name'>{data['from']}</div>
+                            <div className='chat-name'>{formatString(data.from)}</div>
                             <div className='flex-align-other'>
                                 <div className='chat-photo'></div>
                                 <div className='chat-message'>{data.message}</div>
