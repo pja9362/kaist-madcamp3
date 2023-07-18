@@ -1,8 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import myTicket1 from '../images/ticket2.png';
 import myTicket2 from '../images/ticket3.png';
+// 르세라핌
+import myPhoto1 from '../images/phototicket2.png';
 
-import backImage from '../images/back_ticket.png';
+// 슈가
+import myPhoto2 from '../images/phototicket3.png';
+
+// 넙죽이
+import myPhoto3 from '../images/phototicket1.png';
+
 import './AllTickets.css';
 import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -25,12 +32,14 @@ const MyTickets = () => {
     }, []);
       
     const [ticketImage, setTicketImage] = useState('');
+    const [photoImage, setPhotoImage] = useState('');
+
     const [ownerAddress, setOwnerAddress] = useState('');
 
       const slides = [
-          { id: 1, image: myTicket2, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
-          { id: 2, image: myTicket1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
-          { id: 3, image: ticketImage, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
+          { id: 1, image: myTicket2, backImage: myPhoto2, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
+          { id: 2, image: myTicket1, backImage: myPhoto1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
+          { id: 3, image: ticketImage, backImage: photoImage !== '' ? photoImage : myPhoto3, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
       ];
 
       // 함수로 이미지를 가져오기
@@ -42,14 +51,16 @@ const MyTickets = () => {
 
       try {
         const response = await fetch(API_URL);
-        console.log('response', response);
+        console.log(API_URL);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log('ALL DATA', data.photoUri);
         console.log('ticketUri', data.ticketUri);
+        if(data.photoUri !== '') return { ticketUri: data.ticketUri, photoUri: data.photoUri };
+        else return data.ticketUri;
 
-        return data.ticketUri;
       } catch (error) {
         console.error('Error fetching ticket image:', error);
         return null;
@@ -61,9 +72,11 @@ const MyTickets = () => {
     }, []); 
 
     useEffect(() => {
-      fetchTicketImage(ownerAddress).then((ticketUri) => {
+      fetchTicketImage(ownerAddress).then(({ticketUri, photoUri}) => {
           setTicketImage(ticketUri);
-          console.log(ticketUri);
+          if(photoUri !== '') {
+            setPhotoImage(photoUri);
+          }
       });
     }, [ownerAddress]);
 
@@ -115,16 +128,16 @@ const MyTickets = () => {
                     style={{ animationDelay: `${index * 0.5}s` }}
                 >
                     <div className="card">
-                    <div className="front">
-                        <div className="image-wrapper">
-                        <img src={slide.image} alt={`Concert ${slide.id}`} />
-                        </div>
-                    </div>
-                    <div className="back">
-                        <div className='back-content'>
-                                <img src={backImage} alt={`Concert ${slide.id}`}/> 
-                            </div>
-                        </div>
+                      <div className="front">
+                          <div className="image-wrapper">
+                            <img src={slide.image} alt={`Concert ${slide.id}`} />
+                          </div>
+                      </div>
+                      <div className="back">
+                          <div className='back-content'>
+                            <img src={slide.backImage} alt={`Concert ${slide.id}`}/> 
+                          </div>
+                      </div>
                     </div>
                 </div>
             ))}
