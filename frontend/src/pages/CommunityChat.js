@@ -5,7 +5,7 @@ import './Community.css';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import { io } from "socket.io-client";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
 // import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom';
 
@@ -16,7 +16,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
         query: { userId: tokenId },
     });
 
-    
+
     useEffect(() => {
         socket.on(SOCKET_RECEIVE.CONNECT, () => {
         console.log("socket server connected.");
@@ -50,7 +50,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
             }
             const data = await response.json();
             setMessages(data.messages.map((data) => ({ from: data.nftTokenId
-                , message: data.contents })));
+                , message: data.contents, createdAt: formatTime(data.createdAt) })));
             console.log('room messages: ', data.messages);
         } catch (error) {
         console.error('Error fetching room messages: ', error);
@@ -74,7 +74,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
     };
 
     const [isHeartClicked, setIsHeartClicked] = useState(false);
-    
+
     // const handleHeartButtonClick = () => {
     //     const groupSize = 3;
     //     const chatBox = document.querySelector('.chat-box');
@@ -95,6 +95,23 @@ const CommunityChat = ({ tokenId, roomId }) => {
     //         }, Math.floor(i / groupSize) * 300);
     //     }
     // };
+    function formatTime(timestamp) {
+        const date = new Date(timestamp);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        let period = "AM";
+        let formattedHours = hours;
+
+        if (hours >= 12) {
+            period = "PM";
+            formattedHours = hours === 12 ? 12 : hours - 12;
+        }
+
+        formattedHours = formattedHours < 10 ? "0" + formattedHours : formattedHours;
+        const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+
+        return `${formattedHours}:${formattedMinutes} ${period}`;
+    }
 
     const handleHeartButtonClick = () => {
         const groupSize = 3;
@@ -103,7 +120,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
         for (let i = 0; i < 10; i++) {
             setTimeout(() => {
                 const heart = document.createElement('span');
-                createRoot(heart).render(<FavoriteIcon style={{ color: `hsla(${Math.random() * 30}, 100%, 50%, ${Math.random()})`, fontSize: `${Math.random() * 24 + 12}px` }} />);
+                createRoot(heart).render(<p style={{ color: `hsla(${Math.random() * 30}, 100%, 50%, ${Math.random()})`, fontSize: `${Math.random() * 24 + 12}px` }}>&#x1F497;</p>);
                 heart.classList.add('heart');
                 heart.style.left = `${Math.random() * (chatBoxRect.right - chatBoxRect.left) + chatBoxRect.left}px`;
                 heart.style.bottom = `${window.innerHeight - chatBoxRect.bottom}px`;
@@ -116,7 +133,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
             }, Math.floor(i / groupSize) * 300);
         }
     };
-    
+
 
     return (
         <div className='chat-box' >
@@ -132,13 +149,22 @@ const CommunityChat = ({ tokenId, roomId }) => {
                         data.from === tokenId ?
                             <div key={index} className='flex-align-mine'>
                                 <div className='chat-message-mine'>{data.message}</div>
+                                {(index === 0 || messages[index - 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
                             </div>
+                            :
+                            (index !== 0 && messages[index - 1].from === data.from) ?
+                                <div key={index} style={{marginLeft:45}}>
+                                <div className='flex-align-other'>
+                                    <div className='chat-message'>{data.message}</div>
+                                    </div>
+                                </div>
                             :
                             <div key={index}>
                             <div className='chat-name'>{data['from']}</div>
                             <div className='flex-align-other'>
                                 <div className='chat-photo'></div>
-                                    <div className='chat-message'>{data.message}</div>
+                                <div className='chat-message'>{data.message}</div>
+                                {(index === 0 || messages[index - 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
                             </div>
                         </div>
                     ))}
