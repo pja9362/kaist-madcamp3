@@ -12,30 +12,43 @@ import { createRoot } from 'react-dom';
 const CommunityChat = ({ tokenId, roomId }) => {
     const [inputText, setInputText] = useState('');
     const [messages, setMessages] = useState([]);
-    const socket = io(SOCKET_URL, {
-        query: { userId: tokenId },
-    });
+    const messageEndRef = useRef(null);
+    const [socket, setSocket] = useState(null);
+    // const socket = io(SOCKET_URL, {
+    //     query: { userId: tokenId },
+    // });
 
 
     useEffect(() => {
-        socket.on(SOCKET_RECEIVE.CONNECT, () => {
-        console.log("socket server connected.");
+        if (socket) {
+            socket.on(SOCKET_RECEIVE.CONNECT, () => {
+                console.log("socket server connected.");
+            });
+            socket.on(SOCKET_RECEIVE.DISCONNECT, () => {
+                console.log("socket server disconnected.");
+            });
+            socket.emit(SOCKET_SEND.ROOM_IN, roomId);
+            socket.on(SOCKET_RECEIVE.MESSAGE, (data) => {
+                console.log(data);
+                setMessages((prevMessages) => [...prevMessages, data]);
+                //messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    }, [socket, roomId]);
+    useEffect(() => {
+        const newSocket = io(SOCKET_URL, {
+            query: { userId: tokenId },
         });
-        socket.on(SOCKET_RECEIVE.DISCONNECT, () => {
-        console.log("socket server disconnected.");
-        });
-        socket.emit(SOCKET_SEND.ROOM_IN, roomId);
-        socket.on(SOCKET_RECEIVE.MESSAGE, (data) => {
-            console.log(data);
-            setMessages((prevMessages) => [...prevMessages, data]);
-        });
+        setSocket(newSocket);
+
         return () => {
-            socket.disconnect();
+            newSocket.disconnect();
         };
     }, []);
 
     useEffect(() => {
         fetchChatMessages();
+        //messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }, []);
 
     const fetchChatMessages = async () => {
@@ -137,26 +150,32 @@ const CommunityChat = ({ tokenId, roomId }) => {
                 <div className='chat-content'>
                     {messages.map((data, index) => (
                         data.from === tokenId ?
+                            <div>
                             <div key={index} className='flex-align-mine'>
                                 <div className='chat-message-mine'>{data.message}</div>
-                                {(index === 0 || messages[index - 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
-                            </div>
+                                {(index === 0 || messages[index - 1].createdAt !== data.createdAt) && <div className='chat-time'>{data.createdAt}</div>}
+
+                                </div>
+                                { index===messages.length-1 && < div ref={messageEndRef}/>}
+                                </div>
                             :
                             (index !== 0 && messages[index - 1].from === data.from) ?
                                 <div key={index} style={{marginLeft:45}}>
                                 <div className='flex-align-other'>
                                     <div className='chat-message'>{data.message}</div>
                                     </div>
+                                    { index===messages.length-1 && <div ref={messageEndRef}></div>}
                                 </div>
                             :
                             <div key={index}>
                             <div className='chat-name'>{formatString(data.from)}</div>
-                            <div className='flex-align-other'>
-                                <div className='chat-photo'></div>
-                                <div className='chat-message'>{data.message}</div>
-                                {(index === 0 || messages[index - 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
+                                <div className='flex-align-other'>
+                                    <div className='chat-photo'></div>
+                                    <div className='chat-message'>{data.message}</div>
+                                    {(index === 0 || messages[index - 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
+                                </div>
+                                { index===messages.length-1 && <div ref={messageEndRef}></div>}
                             </div>
-                        </div>
                     ))}
                 </div>
             </div>
