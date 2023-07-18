@@ -15,6 +15,35 @@ const CommunityChat = ({ tokenId, roomId }) => {
     const messageEndRef = useRef(null);
     const [socket, setSocket] = useState(null);
     
+    const lastMessageRef = useRef(null);
+
+
+    useEffect(() => {
+        const handleScrollToLastMessage = () => {
+          if (lastMessageRef.current) {
+            setTimeout(() => {
+              lastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+            }, 0);
+            // console.log(chatBoxRef.current.scrollHeight);
+          }
+        };
+
+        handleScrollToLastMessage();
+      }, []);
+
+      useEffect(() => {
+        const handleScrollToLastMessage = () => {
+          if (lastMessageRef.current && messages.length > 0) {
+            setTimeout(() => {
+              lastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+            }, 0);
+            // console.log(chatBoxRef.current.scrollHeight);
+          }
+        };
+
+        handleScrollToLastMessage();
+      }, [messages]);
+
     useEffect(() => {
         if (socket) {
           socket.on(SOCKET_RECEIVE.CONNECT, () => {
@@ -65,8 +94,9 @@ const CommunityChat = ({ tokenId, roomId }) => {
         };
       
         fetchChatMessages();
-        //messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        
       }, [roomId]);
+      
       
 
     const handleKeyPress = (event) => {
@@ -149,7 +179,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                     <div className='chat-mode'>Offline</div>
                 </div>
             </div>
-            <div className='flex-column'>
+            <div className='flex-column' style={{overflowY: 'auto'}}>
             <div className='chat-room-inside'>
                 <div className='chat-content'>
                     {messages.map((data, index) => (
@@ -159,16 +189,16 @@ const CommunityChat = ({ tokenId, roomId }) => {
                                     <div className='chat-message-mine'>{data.message}</div>
                                     {(index===messages.length-1 || messages[index + 1].createdAt !== data.createdAt) && <div className='chat-time'>{data.createdAt}</div>}
                                </div>
-                                { index===messages.length-1 && <div ref={messageEndRef}/>}
+                                { index===messages.length-1 && <div ref={messages.length - 1 === index ? lastMessageRef : null}/>}
                             </div>
                             :
                             (index !== 0 && messages[index - 1].from === data.from) ?
                                 <div key={index} style={{marginLeft:45}}>
                                     <div className='flex-align-other'>
-                                        <div className='chat-message'>{data.message}</div>
+                                        <div className='chat-message' >{data.message}</div>
                                         {(index===messages.length-1 || messages[index + 1].createdAt !== data.createdAt) && <div className='chat-time'>{data.createdAt}</div>}
                                     </div>
-                                    { index===messages.length-1 && <div ref={messageEndRef}/>}
+                                    { index===messages.length-1 && <div ref={messages.length - 1 === index ? lastMessageRef : null}/>}
                                 </div>
                             :
                             <div key={index}>
@@ -178,7 +208,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                                     <div className='chat-message'>{data.message}</div>
                                     {(index===messages.length-1 || messages[index + 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
                                 </div>
-                                { index===messages.length-1 && <div ref={messageEndRef}/>}
+                                { index===messages.length-1 && <div ref={messages.length - 1 === index ? lastMessageRef : null}/>}
                             </div>
                     ))}
                 </div>
@@ -190,7 +220,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                     <SendSharpIcon style={{ marginRight: '10px' }}/>
                     <div>Send</div>
                 </div>
-                </div>
+            </div>
             </div>
         </div>
     );
