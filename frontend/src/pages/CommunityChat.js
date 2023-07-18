@@ -5,14 +5,11 @@ import './Community.css';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import { io } from "socket.io-client";
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom';
 
 const CommunityChat = ({ tokenId, roomId }) => {
     const [inputText, setInputText] = useState('');
     const [messages, setMessages] = useState([]);
-    const messageEndRef = useRef(null);
     const [socket, setSocket] = useState(null);
     
     const lastMessageRef = useRef(null);

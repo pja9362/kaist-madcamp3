@@ -9,6 +9,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import logo from '../images/logo_black.png';
 import data from '../abi/data.json';
 import config from '../config/config';
+import { fetchTicketImage } from '../services/api';
 
 const Header = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -137,31 +138,6 @@ const Header = () => {
         }
     }, [isLogin]);
 
-
-    // 함수로 이미지를 가져오기
-    const fetchTicketImage = async (tokenId) => {
-        const IP_ADDRESS = '172.10.5.130';
-        const PORT = 80;
-        const ROUTER_PATH = '/meta-stage-web3/api/v1';
-        const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
-
-        try {
-        const response = await fetch(API_URL);
-        console.log(API_URL);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        if (data.photoUriUri === null || data.photoUriUri === undefined || data.photoUriUri === '') {
-            return data;
-        }
-        else return data.photoUriUri;
-
-        } catch (error) {
-            console.error('Error fetching ticket image:', error);
-        return null;
-        }
-    };
 
     useEffect(() => {
         setOwnerAddress(localStorage.getItem('ownerAddress'));
