@@ -34,45 +34,48 @@ const MyTickets = () => {
         return () => clearTimeout(timer);
     }, []);
       
-    const [ticketImage, setTicketImage] = useState(null);
+    const [ticketImage, setTicketImage] = useState('');
+    const [ownerAddress, setOwnerAddress] = useState('');
 
-    const slides = [
-        { id: 1, image: myTicket2, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
-        { id: 2, image: myTicket1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
-        { id: 3, image: mainTicket, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
-    ];
+      const slides = [
+          { id: 1, image: myTicket2, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
+          { id: 2, image: myTicket1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
+          { id: 3, image: ticketImage, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
+      ];
 
-    // 함수로 이미지를 가져오기
-  const fetchTicketImage = async (tokenId) => {
-    console.log("FETCHING TICKET IMAGE", tokenId);
-    const IP_ADDRESS = '172.10.5.130';
-    const PORT = 80;
-    const ROUTER_PATH = '/meta-stage-web3/api/v1';
-    const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
+      // 함수로 이미지를 가져오기
+    const fetchTicketImage = async (tokenId) => {
+      const IP_ADDRESS = '172.10.5.130';
+      const PORT = 80;
+      const ROUTER_PATH = '/meta-stage-web3/api/v1';
+      const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
 
-    console.log("API_URL", API_URL)
-    try {
-      const response = await fetch(API_URL);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      try {
+        const response = await fetch(API_URL);
+        console.log('response', response);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('ticketUri', data.ticketUri);
+
+        return data.ticketUri;
+      } catch (error) {
+        console.error('Error fetching ticket image:', error);
+        return null;
       }
-      const data = await response.json();
-      const { photoUri } = data;
-      return photoUri;
-    } catch (error) {
-      console.error('Error fetching ticket image:', error);
-      return null;
-    }
-  };
+    };
 
-  useEffect(() => {
-    fetchTicketImage(config.contractAddress)
-    .then((photoUri) => {
-      console.log(photoUri);
-      alert("FETCHED TICKET IMAGE");
-      setTicketImage(photoUri);
-    });
-  }, []);
+    useEffect(() => {
+      setOwnerAddress(localStorage.getItem('ownerAddress'));
+    }, []); 
+
+    useEffect(() => {
+      fetchTicketImage(ownerAddress).then((ticketUri) => {
+          setTicketImage(ticketUri);
+          console.log(ticketUri);
+      });
+    }, [ownerAddress]);
 
     const nextSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide === slides.length - 1 ? 0 : prevSlide + 1));
@@ -108,12 +111,6 @@ const MyTickets = () => {
           carousel.style.transform = `translateX(${-shift * slideWidth}px)`;
         }
     }, [currentSlide, slides.length]);
-
-    const handlePurchaseClick = (concert) => {
-        setSelectedConcert(concert);
-        console.log(concert.id);
-        setIsModalOpen(true);
-    };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);

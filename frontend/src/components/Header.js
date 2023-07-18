@@ -29,6 +29,7 @@ const Header = () => {
                 setAddress(accounts[0]);
                 // Set login state to true
                 setIsLogin(true);
+                localStorage.setItem('ownerAddress', accounts[0]);
             } else {
                 // Metamask is not available
                 alert('Please install and connect Metamask to login.');
@@ -49,6 +50,7 @@ const Header = () => {
                     if (accounts.length > 0) {
                         setAddress(accounts[0]);
                         setIsLogin(true);
+                        localStorage.setItem('ownerAddress', accounts[0]);
                     }
                 } catch (err) {
                     console.error(err);
