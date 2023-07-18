@@ -14,4 +14,5 @@ export const SOCKET_RECEIVE = {
   USER_IN: "user-entered",
   MESSAGE: "message"
 };
+export const BACK_ENDPOINT = '172.10.5.147';
 export const SOCKET_URL = 'http://172.10.5.147:80/chat';

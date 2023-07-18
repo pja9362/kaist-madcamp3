@@ -1,8 +1,9 @@
 :root {
     --border-color: #FF0060;
     --list-color: black;
-    --base-color: #ecf4f6;
-    --point-color: #6588DE;
+    /* --base-color: #ecf4f6; */
+    --base-color: #1f1f13;
+    --point-color:  #1E90FF;
     --point-color2: #b4b7be;
 }
 
@@ -11,6 +12,7 @@
     width: 100vw;
     display: flex;
     flex-direction: column;
+    background-color: #18180D; 
 }
 
 .chat-border {
@@ -19,12 +21,10 @@
 
 .container {
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, .1);
-    background-color: white;
+    background-color: #18180D;
     display: flex;
-    height: 100vh;
-    overflow: hidden;
     flex-direction: row;
-
+    overflow: hidden;
 }
 
 .flex-row {
@@ -44,7 +44,6 @@
 
 .chat-header-box {
     height: 100px;
-    background: conic-gradient(from 202deg at 81.78% 23.22%, #4629F2 0deg, #13C6FF 125.62440357627869deg, #B94DFB 215.62499284744263deg, #FF53EE 294.3749928474426deg, #F3B960 360deg), #D9D9D9;
     backdrop-filter: blur(10px);
     -webkit-filter: blur(10px);
 }
@@ -70,6 +69,7 @@
     height: 100%;
     background: var(--base-color);
     border-radius: 14px 14px 0px 0px;
+    z-index: 5;
 }
 
 
@@ -96,6 +96,7 @@
     background: var(--point-color);
     color: #FDFDFE;
     font-size: 12px;
+    box-shadow: 0px 8px 40px 0px rgba(101, 136, 222, 0.8);
 }
 
 .chat-mode {
@@ -115,9 +116,11 @@
 
 .chat-box {
     flex: 3;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     flex-direction: column;
+
+    overflow: hidden;
 }
 
 .chat-header {
@@ -144,20 +147,27 @@
     display: flex;
     flex-direction: row;
     border-radius: 14px;
-    box-shadow: 0px 8px 40px 0px rgba(0, 72, 251, 0.30);
+    /* box-shadow: 0px 8px 40px 0px rgba(0, 72, 251, 0.30); */
+    box-shadow: 0px 8px 40px 0px rgba(101, 136, 222, 0.8);
 }
 
 .list-item-photo-selected {
-    background: #cccccc;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     margin-right: 15px;
     height: 44px;
     width: 44px;
     border-radius: 44px;
-    border: 2px solid var(--border-color);
+    border: 3px solid #13C6FF ;
+    /* border: 2px solid conic-gradient(from 202deg at 81.78% 23.22%, #4629F2 0deg, #13C6FF 125.62500357627869deg, #B94DFB 215.62499284744263deg, #FF53EE 294.3749928474426deg, #F3B960 360deg), #D9D9D9; */
+    ;
 }
 
 .list-item-photo {
-    background: #cccccc;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     margin-right: 15px;
     height: 44px;
     width: 44px;
@@ -168,39 +178,39 @@
 /* text */
 .bold-text-white {
     color: white;
-    font-size: 18px;
+    margin-bottom: 4px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 }
 
 .medium-text-white {
-    color: white;
-    font-size: 16px;
+    color: rgb(223, 223, 223);
+    font-size: 12px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
 }
 
 .bold-text {
-    color: #52585D;
-    font-size: 18px;
+    color: white;
+    margin-bottom: 4px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 }
 
 .medium-text {
-    color: #96A9BA;
-    font-size: 16px;
+    color: #b4b7be;
+    font-size: 12px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
 }
 
-/* bottom input */
 .chat-input-box {
-    margin-left: 10px;
     flex: 1;
     box-sizing: border-box;
     height: 40px;
@@ -224,9 +234,8 @@
     font-weight: 400;
     line-height: normal;
     padding: 0px 10px;
+    box-shadow: 0px 8px 40px 0px rgba(101, 136, 222, 0.8);
 }
-
-
 
 /* chat-message */
 
@@ -238,6 +247,13 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+}
+
+.chat-room-inside {
+    gap: 10px;
+    padding: 30px;
+    padding-top: 0;
+    overflow-y: auto;
 }
 
 .chat-content {
@@ -261,7 +277,7 @@
 .chat-message{
     margin-left: 15px;
     border-radius: 0px 14px 14px 14px;
-    background: var(--base-color);
+    background: #fff;
     /* height: 66px; */
     width: fit-content;
     padding: 12px 16px;
@@ -278,9 +294,24 @@
 .chat-message-mine{
     margin-right: 15px;
     border-radius: 14px 0px 14px 14px;
-    background: #F3BA4A;
-    /* height: 66px; */
+    background: #97FEED;
     width: fit-content;
     padding: 12px 16px;
-    color: white;
+}
+
+/* heart button */
+
+.heart {
+    position: fixed;
+    bottom: 50px;
+    animation: fly 3s linear;
+}
+
+@keyframes fly {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-500px);
+    }
 }
