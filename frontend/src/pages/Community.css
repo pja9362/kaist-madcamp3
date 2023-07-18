@@ -237,7 +237,7 @@ to {
     font-weight: 600;
     line-height: normal;
     align-self: end;
-    min-width: 56px;
+    min-width: 58px;
 }
 
 
@@ -306,10 +306,13 @@ to {
 }
 
 .chat-photo {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     box-sizing: border-box;
     background: #cccccc;
     height: 44px;
-    width: 44px;
+    min-width: 44px !important;
     border-radius: 44px;
     border: 2px solid var(--point-color);
 }
@@ -321,6 +324,7 @@ to {
     /* height: 66px; */
     width: fit-content;
     padding: 12px 16px;
+    max-width: 60%;
 }
 .flex-align-other{
     display: flex;
@@ -341,7 +345,7 @@ to {
     background: linear-gradient(to right, #7f7fd5, #86a8e7, #75beb8);
     width: fit-content;
     padding: 12px 16px;
-
+    max-width: 60%;
 }
 
 .no-room-message{
