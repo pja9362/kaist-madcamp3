@@ -28,20 +28,18 @@ const fetchTicketImage = async (tokenId) => {
   const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
 
   try {
-  const response = await fetch(API_URL);
-  console.log(API_URL);
-  if (!response.ok) {
-      throw new Error('Network response was not ok');
-  }
-  const data = await response.json();
-  if (data.photoUriUri === null || data.photoUriUri === undefined || data.photoUriUri === '') {
-      return data;
-  }
-  else return data.photoUriUri;
+    const response = await fetch(API_URL);
+    console.log(API_URL);
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    
+    return data;
 
-  } catch (error) {
-      console.error('Error fetching ticket image:', error);
-  return null;
+    } catch (error) {
+        console.error('Error fetching ticket image:', error);
+    return null;
   }
 };
   

@@ -66,6 +66,12 @@
     max-height: 100%;
     object-fit: cover;
 }
+.carousel-item.active.flipped .back-text {
+    transform: rotateY(180deg);
+    background-color: white;
+    color: 'black';
+    padding: 9px 13px;
+}
 
 .back-content img {
   height: 100%;
@@ -98,4 +104,5 @@
   
 .dot.active {
     background-color: #FF0060 ;
+    
 }
