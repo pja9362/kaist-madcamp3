@@ -15,6 +15,8 @@ const Header = () => {
     const [address, setAddress] = useState('');
     const [walletBalance, setWalletBalance] = useState('');
     const [isLogin, setIsLogin] = useState(false);
+    const [profile, setProfile] = useState(null);
+    const [ownerAddress, setOwnerAddress] = useState('');
 
     const contractAddress = config.contractAddress;
     
@@ -93,7 +95,7 @@ const Header = () => {
         } catch (error) {
             console.error(error);
         }
-};
+    };
     const handleDrawerOpen = () => {
         setIsDrawerOpen(true);
     };
@@ -135,6 +137,45 @@ const Header = () => {
         }
     }, [isLogin]);
 
+
+    // 함수로 이미지를 가져오기
+    const fetchTicketImage = async (tokenId) => {
+        const IP_ADDRESS = '172.10.5.130';
+        const PORT = 80;
+        const ROUTER_PATH = '/meta-stage-web3/api/v1';
+        const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
+
+        try {
+        const response = await fetch(API_URL);
+        console.log(API_URL);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        if (data.photoUriUri === null || data.photoUriUri === undefined || data.photoUriUri === '') {
+            return data;
+        }
+        else return data.photoUriUri;
+
+        } catch (error) {
+            console.error('Error fetching ticket image:', error);
+        return null;
+        }
+    };
+
+    useEffect(() => {
+        setOwnerAddress(localStorage.getItem('ownerAddress'));
+    }, []); 
+
+    useEffect(() => {
+        fetchTicketImage(ownerAddress).then((data) => {
+            const photoUri = data?.photoUri; 
+            if (photoUri !== '') {
+                setProfile(photoUri);
+            }
+        });
+    }, [ownerAddress]);
+
     const sideList = () => (
         <div
         role="presentation"
@@ -150,7 +191,7 @@ const Header = () => {
         <List sx={{ height: '100%', padding: '10%', }}>
             {/* 프로필 사진 */}
             <ListItem sx={{height: '25%', display: 'flex', flexDirection: 'column', alignItems: 'center', m: '70px 0 30px'}}>
-                <Avatar src="URL 또는 이미지 경로" alt="프로필 사진" sx={{ width: '150px', height: '150px', mb: '20px'}} />
+                <Avatar src={profile} alt="프로필 사진" sx={{ width: '160px', height: '160px', mb: '20px'}} />
             </ListItem>
 
             {/* 지갑 주소 */}

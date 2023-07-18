@@ -14,7 +14,7 @@ import './AllTickets.css';
 import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import TicketModal from './TicketModal';
+
 
 const MyTickets = () => {
     const carouselRef = useRef(null);
@@ -33,13 +33,15 @@ const MyTickets = () => {
       
     const [ticketImage, setTicketImage] = useState('');
     const [photoImage, setPhotoImage] = useState('');
+    const [photoName, setPhotoName] = useState('');
+    const [photoDesc, setPhotoDesc] = useState('');
 
     const [ownerAddress, setOwnerAddress] = useState('');
 
       const slides = [
           { id: 1, image: myTicket2, backImage: myPhoto2, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
           { id: 2, image: myTicket1, backImage: myPhoto1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
-          { id: 3, image: ticketImage, backImage: photoImage !== '' ? photoImage : myPhoto3, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
+          { id: 3, image: ticketImage, backImage: photoImage !== null ? photoImage : myPhoto3, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
       ];
 
       // 함수로 이미지를 가져오기
@@ -56,9 +58,9 @@ const MyTickets = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('ALL DATA', data.photoUri);
-        console.log('ticketUri', data.ticketUri);
-        if(data.photoUri !== '') return { ticketUri: data.ticketUri, photoUri: data.photoUri };
+        console.log('ALL DATA', data);
+        console.log("tokenName : ", data.nftName, "tokenDescription : ", data.nftDescription);
+        if(data.photoUri !== '') return { ticketUri: data.ticketUri, photoUri: data.photoUri, photoName: data.nftName, photoDesc: data.nftDescription };
         else return data.ticketUri;
 
       } catch (error) {
@@ -72,10 +74,12 @@ const MyTickets = () => {
     }, []); 
 
     useEffect(() => {
-      fetchTicketImage(ownerAddress).then(({ticketUri, photoUri}) => {
+      fetchTicketImage(ownerAddress).then(({ticketUri, photoUri, photoName, photoDesc}) => {
           setTicketImage(ticketUri);
           if(photoUri !== '') {
             setPhotoImage(photoUri);
+            setPhotoName(photoName);
+            setPhotoDesc(photoDesc);
           }
       });
     }, [ownerAddress]);
@@ -137,6 +141,14 @@ const MyTickets = () => {
                           <div className='back-content'>
                             <img src={slide.backImage} alt={`Concert ${slide.id}`}/> 
                           </div>
+                          {
+                              slide.id === 3 && slide.backImage === photoImage ?
+                              <div className='back-text' style={{fontSize: '14px'}}>
+                                <div style={{color: '#fff'}}>{photoName}</div>
+                                <div style={{color: '#fff'}}>{photoDesc}</div>
+                              </div>
+                              : null
+                          }
                       </div>
                     </div>
                 </div>
