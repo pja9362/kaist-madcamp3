@@ -146,6 +146,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                     <div className='chat-mode'>Offline</div>
                 </div>
             </div>
+            <div className='flex-column'>
             <div className='chat-room-inside'>
                 <div className='chat-content'>
                     {messages.map((data, index) => (
@@ -179,12 +180,13 @@ const CommunityChat = ({ tokenId, roomId }) => {
                     ))}
                 </div>
             </div>
-            <div className='flex-row'>
+            <div className='flex-row' style={{ justifySelf: 'flex-end'}}>
                 <FavoriteBorderOutlined color='disabled' sx={{p: 2, ml : '30px', color: isHeartClicked ? 'red' : 'white'}} onClick={()=>{setIsHeartClicked(true); handleHeartButtonClick();}} />
                 <input className='chat-input-box' style={{ padding: '5px 15px', borderRadius: '20px', border: 0, outline: 'none' }}  placeholder='Type your message' value={inputText} onKeyPress={handleKeyPress} onChange={handleInputTextChange}/>
                 <div className='chat-input-button' style={{borderRadius: '20px', padding: '1px 2px'}} onClick={handleClickButton} onKeyDown={handleClickButton}>
                     <SendSharpIcon style={{ marginRight: '10px' }}/>
                     <div>Send</div>
+                </div>
                 </div>
             </div>
         </div>
