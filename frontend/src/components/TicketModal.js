@@ -3,8 +3,9 @@ import { Modal, Box, Typography, Button } from '@mui/material';
 import Web3 from 'web3';
 import data from "../abi/data.json";
 import config from '../config/config';
+import { fetchUpdatedTicketCount } from '../services/api';
 
-const TicketModal = ({ open, onClose, concert }) => {
+const TicketModal = ({ open, onClose, concert, setTicketCount }) => {
 
     const contractAddress = config.contractAddress;
     const [isMinting, setIsMinting]= useState(false);
@@ -23,15 +24,19 @@ const TicketModal = ({ open, onClose, concert }) => {
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accounts[0];
                 // 스마트 컨트랙트의 함수 호출
-                await contract.methods.MintTicket()
-                .send({ from: account, value: web3.utils.toWei("0.001", "ether")
-                // .on('receipt', function (receipt) {
-                //     setIsMinting(true);
-                //     console.log(receipt);
-                //   }) 
-                });
-                // 예매 완료 알림
-                alert('예매 완료!');
+                const receipt = await contract.methods.MintTicket()
+                .send({ from: account, value: web3.utils.toWei("0.001", "ether") });
+               // 트랜잭션이 성공적으로 마이닝된 경우에만 처리
+                if (receipt.status) {
+                    // 예매 완료 알림
+                    alert('예매 완료!');
+
+                    // nftCount 업데이트를 TicketModal 컴포넌트의 상태로 처리합니다.
+                    const updatedNftCount = await fetchUpdatedTicketCount();
+                    setTicketCount(updatedNftCount);
+                }
+
+                // NFT 개수 업데이트
             } catch (error) {
                 console.error(error);
             }

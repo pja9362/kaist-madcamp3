@@ -1,27 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
-import Header from '../components/Header';
-import concert2 from '../images/concert2.jpeg';
-import concert4 from '../images/concert4.jpeg';
-import mainTicket from '../images/ticket1.png';
 import myTicket1 from '../images/ticket2.png';
 import myTicket2 from '../images/ticket3.png';
 
-import mainconcert from '../images/mainconcert.png';
 import backImage from '../images/back_ticket.png';
 import './AllTickets.css';
 import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TicketModal from './TicketModal';
-import Grow from '@mui/material/Grow';
-import config from '../config/config';
-
 
 const MyTickets = () => {
     const carouselRef = useRef(null);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedConcert, setSelectedConcert] = useState(null);
     const [showCards, setShowCards] = useState(false);
 
     useEffect(() => {
@@ -112,16 +102,12 @@ const MyTickets = () => {
         }
     }, [currentSlide, slides.length]);
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
 
     return (
       <>
         <div className="carousel-container">
           <div className="carousel" ref={carouselRef}>
-            {slides.map((slide, index) => (
+          {slides.filter(slide => slide.image).map((slide, index) => (
                 <div
                     key={slide.id}
                     className={`carousel-item ${index === currentSlide ? 'active' : ''}`}
@@ -155,12 +141,6 @@ const MyTickets = () => {
           <Button className="prevButton" onClick={prevSlide} startIcon={<ArrowBackIosIcon />}  sx={{left: 0, color: '#fff', zIndex: 3, position: 'absolute', top: '50%' , fontWeight: '900'}}></Button>
           <Button className="nextButton" onClick={nextSlide} endIcon={<ArrowForwardIosIcon />} sx={{right: 0, color: '#fff', zIndex: 3,  position: 'absolute', top: '50%', fontWeight: '900' }}></Button>
         </div>
-        <TicketModal
-          open={isModalOpen}
-          onClose={handleCloseModal}
-          concert={selectedConcert}
-          
-        />
       </>
   );
 };
