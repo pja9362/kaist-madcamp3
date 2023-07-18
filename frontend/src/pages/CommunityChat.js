@@ -146,7 +146,6 @@ const CommunityChat = ({ tokenId, roomId }) => {
                     <div className='chat-mode'>Offline</div>
                 </div>
             </div>
-            <div className='flex-column'>
             <div className='chat-room-inside'>
                 <div className='chat-content'>
                     {messages.map((data, index) => (
@@ -186,7 +185,6 @@ const CommunityChat = ({ tokenId, roomId }) => {
                 <div className='chat-input-button' style={{borderRadius: '20px', padding: '1px 2px'}} onClick={handleClickButton} onKeyDown={handleClickButton}>
                     <SendSharpIcon style={{ marginRight: '10px' }}/>
                     <div>Send</div>
-                </div>
                 </div>
             </div>
         </div>
