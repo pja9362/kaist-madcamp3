@@ -6,8 +6,10 @@ import SendSharpIcon from '@mui/icons-material/SendSharp';
 import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
 import CommunityChat from './CommunityChat';
 import backImage from '../images/background_grad.png';
+
+
 const Community = () => {
-    const [ownerAddress, setOwnerAddress] = useState('지나');
+    const [ownerAddress, setOwnerAddress] = useState('근원');
     const [chatRoomList, setChatRoomList] = useState([]);
     const [selectedRoomId, setSelectedRoomId] = useState(1);
 
