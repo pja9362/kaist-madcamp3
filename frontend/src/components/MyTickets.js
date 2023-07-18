@@ -5,8 +5,8 @@ import myPhoto1 from '../images/phototicket2.png';
 import myPhoto2 from '../images/phototicket3.png';
 import myPhoto3 from '../images/phototicket1.png';
 
-import './AllTickets.css';
-import { Button } from '@mui/material';
+import './MyTickets.css';
+import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { fetchTicketImage } from '../services/api';
@@ -44,16 +44,21 @@ const MyTickets = () => {
     }, []); 
 
     useEffect(() => {
-      fetchTicketImage(ownerAddress).then(({ticketUri, photoUri, photoName, photoDesc}) => {
-          setTicketImage(ticketUri);
+      fetchTicketImage(ownerAddress).then(({ticketUri, photoUri, nftName, nftDescription}) => {
+          console.log(ticketUri, photoUri, nftName, nftDescription);
+          setTicketImage(ticketUri, photoUri, nftName, nftDescription);
           if(photoUri !== '') {
             setPhotoImage(photoUri);
-            setPhotoName(photoName);
-            setPhotoDesc(photoDesc);
+            setPhotoName(nftName);
+            if (nftDescription) {
+              const [_, desc] = nftDescription.split(' - ');
+              setPhotoDesc(desc);
+            }
           }
       });
     }, [ownerAddress]);
 
+    
     const nextSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide === slides.length - 1 ? 0 : prevSlide + 1));
     };
@@ -113,9 +118,10 @@ const MyTickets = () => {
                           </div>
                           {
                               slide.id === 3 && slide.backImage === photoImage ?
-                              <div className='back-text' style={{fontSize: '14px'}}>
-                                <div style={{color: '#fff'}}>{photoName}</div>
-                                <div style={{color: '#fff'}}>{photoDesc}</div>
+                              <div className='back-text'>
+                                <Typography sx={{fontSize: '13px', mb: '3px'}}>{photoName}</Typography>
+                                <Typography sx={{fontSize: '10px', mb: '3px'}}>{photoDesc}</Typography>                              
+                                <Typography sx={{fontSize: '10px', mt: '5px', fontWeight: 'bold'}}>0.001 ETH</Typography>
                               </div>
                               : null
                           }
