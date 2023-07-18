@@ -51,6 +51,7 @@ const Header = () => {
                         setAddress(accounts[0]);
                         setIsLogin(true);
                         localStorage.setItem('ownerAddress', accounts[0]);
+                        console.log(address);
                     }
                 } catch (err) {
                     console.error(err);
@@ -139,11 +140,11 @@ const Header = () => {
             </ListItem>
 
             {/* 프로필 수정 */}
-            {address === 'Admin' ? (
+            {address === '0x40a3371a6d710bde54a2e0003c741838d142896b' ? (
                 <Button variant="contained" sx={{mt: '30%'}}>
                     <Typography>포토카드 변환</Typography>
                 </Button>
-            ) : null}
+            ) : null }
         </List>
         </div>
     );
