@@ -272,6 +272,7 @@
 
 .chat-room-inside {
     gap: 10px;
+    height: 100%;
     padding: 30px;
     padding-top: 0;
     overflow-y: auto;
