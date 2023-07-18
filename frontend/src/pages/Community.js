@@ -46,7 +46,7 @@ const Community = () => {
             if (!str || str.length < 8) {
                 return '';
             }
-    
+
             const prefix = str.slice(0, 5);
             const suffix = str.slice(-3);
 
@@ -92,7 +92,7 @@ const Community = () => {
                         ))}
                     </div>
                 </div>
-                <CommunityChat roomId={1} tokenId={ownerAddress}/>
+                <CommunityChat roomId={1} tokenId={"ownerAddress"}/>
             </div>
         </div>
     );

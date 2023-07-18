@@ -151,21 +151,21 @@ const CommunityChat = ({ tokenId, roomId }) => {
                 <div className='chat-content'>
                     {messages.map((data, index) => (
                         data.from === tokenId ?
-                            <div>
-                            <div key={index} className='flex-align-mine'>
-                                <div className='chat-message-mine'>{data.message}</div>
-                                {(index === 0 || messages[index - 1].createdAt !== data.createdAt) && <div className='chat-time'>{data.createdAt}</div>}
-
-                                </div>
-                                { index===messages.length-1 && < div ref={messageEndRef}/>}
-                                </div>
+                            <div key={index}>
+                                <div className='flex-align-mine'>
+                                    <div className='chat-message-mine'>{data.message}</div>
+                                    {(index===messages.length-1 || messages[index + 1].createdAt !== data.createdAt) && <div className='chat-time'>{data.createdAt}</div>}
+                               </div>
+                                { index===messages.length-1 && <div ref={messageEndRef}/>}
+                            </div>
                             :
                             (index !== 0 && messages[index - 1].from === data.from) ?
                                 <div key={index} style={{marginLeft:45}}>
-                                <div className='flex-align-other'>
-                                    <div className='chat-message'>{data.message}</div>
+                                    <div className='flex-align-other'>
+                                        <div className='chat-message'>{data.message}</div>
+                                        {(index===messages.length-1 || messages[index + 1].createdAt !== data.createdAt) && <div className='chat-time'>{data.createdAt}</div>}
                                     </div>
-                                    { index===messages.length-1 && <div ref={messageEndRef}></div>}
+                                    { index===messages.length-1 && <div ref={messageEndRef}/>}
                                 </div>
                             :
                             <div key={index}>
@@ -173,14 +173,14 @@ const CommunityChat = ({ tokenId, roomId }) => {
                                 <div className='flex-align-other'>
                                     <div className='chat-photo'></div>
                                     <div className='chat-message'>{data.message}</div>
-                                    {(index === 0 || messages[index - 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
+                                    {(index===messages.length-1 || messages[index + 1].createdAt !== data.createdAt ) && <div className='chat-time'>{data.createdAt}</div>}
                                 </div>
-                                { index===messages.length-1 && <div ref={messageEndRef}></div>}
+                                { index===messages.length-1 && <div ref={messageEndRef}/>}
                             </div>
                     ))}
                 </div>
             </div>
-            <div className='flex-row' style={{ justifySelf: 'flex-end'}}>
+            <div className='flex-row' style={{ justifySelf: 'flex-end', marginBottom: 20}}>
                 <FavoriteBorderOutlined color='disabled' sx={{p: 2, ml : '30px', color: isHeartClicked ? 'red' : 'white'}} onClick={()=>{setIsHeartClicked(true); handleHeartButtonClick();}} />
                 <input className='chat-input-box' style={{ padding: '5px 15px', borderRadius: '20px', border: 0, outline: 'none' }}  placeholder='Type your message' value={inputText} onKeyPress={handleKeyPress} onChange={handleInputTextChange}/>
                 <div className='chat-input-button' style={{borderRadius: '20px', padding: '1px 2px'}} onClick={handleClickButton} onKeyDown={handleClickButton}>
