@@ -1,20 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import myTicket1 from '../images/ticket2.png';
 import myTicket2 from '../images/ticket3.png';
-// 르세라핌
 import myPhoto1 from '../images/phototicket2.png';
-
-// 슈가
 import myPhoto2 from '../images/phototicket3.png';
-
-// 넙죽이
 import myPhoto3 from '../images/phototicket1.png';
 
 import './AllTickets.css';
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
+import { fetchTicketImage } from '../services/api';
 
 const MyTickets = () => {
     const carouselRef = useRef(null);
@@ -43,31 +38,6 @@ const MyTickets = () => {
           { id: 2, image: myTicket1, backImage: myPhoto1, title: 'LE SSERAFIM 단독 콘서트', date: '2023.7.31', place: '서울 올림픽공원 체조경기장', price: '스페셜석 : 0.001 ETH' },
           { id: 3, image: ticketImage, backImage: photoImage !== null ? photoImage : myPhoto3, title: '우주대스타 넙죽이 단독 콘서트', date: '2023.7.28', place: '카이스트 N1', price: '스페셜석 : 0.001 ETH' },
       ];
-
-      // 함수로 이미지를 가져오기
-    const fetchTicketImage = async (tokenId) => {
-      const IP_ADDRESS = '172.10.5.130';
-      const PORT = 80;
-      const ROUTER_PATH = '/meta-stage-web3/api/v1';
-      const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}/nft-info?ownerAddress=${tokenId}`;
-
-      try {
-        const response = await fetch(API_URL);
-        console.log(API_URL);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log('ALL DATA', data);
-        console.log("tokenName : ", data.nftName, "tokenDescription : ", data.nftDescription);
-        if(data.photoUri !== '') return { ticketUri: data.ticketUri, photoUri: data.photoUri, photoName: data.nftName, photoDesc: data.nftDescription };
-        else return data.ticketUri;
-
-      } catch (error) {
-        console.error('Error fetching ticket image:', error);
-        return null;
-      }
-    };
 
     useEffect(() => {
       setOwnerAddress(localStorage.getItem('ownerAddress'));
