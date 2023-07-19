@@ -5,15 +5,15 @@
     perspective: 1000px;
     top: 27%;
 }
-
+  
 .carousel {
     display: flex;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    align-items: center; 
 }
-
+  
 .carousel-item {
     flex: 0 0 200px;
     height: 280px;
@@ -27,7 +27,7 @@
     transform-style: preserve-3d;
     opacity: 0.3;
 }
-
+  
 .carousel-item img {
     width: 100%;
     height: 100%;
@@ -38,9 +38,9 @@
     transform: scale(1.2) translateZ(200px) rotateY(0deg); /* Apply the flip effect */
     opacity: 1; /* Set opacity to 1 for the active slide */
 }
-
+  
 .carousel-item.inactive {
-    transform: scale(1) translateZ(0) rotateY(-180deg);
+    transform: scale(1) translateZ(0) rotateY(-180deg); 
 }
 
 .carousel-item .card {
@@ -49,7 +49,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
+    backface-visibility: hidden; 
     transform-style: preserve-3d;
     transition: transform 0.6s;
 }
@@ -72,7 +72,7 @@
 
 .carousel-item .back-content .buy-button {
   position: absolute;
-  top: 35px;
+  top: 35px; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -80,7 +80,7 @@
 
 .carousel-item .back-content .ticket-count {
   position: absolute;
-  top: 10px;
+  top: 10px; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
@@ -88,7 +88,7 @@
 
 .carousel-item .back-content .buy-button:hover {
   border-color: #97FEED; /* Change the border color on hover */
-  color: #97FEED;
+  color: #97FEED; 
 }
 
 .carousel-item.active.flipped {
@@ -121,7 +121,7 @@
     justify-content: center;
     align-items: center;
 }
-
+  
 .carousel-item .image-wrapper img {
     max-width: 100%;
     max-height: 100%;
@@ -146,7 +146,7 @@
     justify-content: center;
     align-items: center;
 }
-
+  
 .dot {
     width: 10px;
     height: 10px;
@@ -156,12 +156,7 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
+  
 .dot.active {
     background-color: #FF0060 ;
-}
-.ticket-back{
-  height: 100%;
-  background: linear-gradient(to right, #17212d, #080c14);
-  opacity: 0.8;
 }
