@@ -35,12 +35,9 @@ const Community = () => {
           // 사용자의 지갑 주소 가져오기
           const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
           const account = accounts[0];
-          console.log("account!!!!!! ", account);
           // 스마트 컨트랙트의 함수 호출
           const receipt = await contract.methods.register(tokenId)
             .send({ from: account });
-            console.log(receipt);
-          console.log("영수증 상태!!!!! ", receipt.status);
           return receipt;
         } catch (error) {
           console.error(error);
@@ -57,7 +54,6 @@ const Community = () => {
             setSelectedRoomId(roomId);
         } else {
             const receipt = await registerMetamaskCall();
-            console.log("영수증!!!!! ", receipt);
             if (isValidReceipt(receipt)) {
             setSelectedRoomId(roomId);
             } else {
@@ -79,7 +75,6 @@ const Community = () => {
             }
             const data = await response.json();
             setChatRoomList(data);
-            console.log('room List:', data);
             } catch (error) {
             console.error('Error fetching roomList:', error);
             }

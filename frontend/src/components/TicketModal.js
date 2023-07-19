@@ -23,8 +23,6 @@ const TicketModal = ({ open, onClose, concert, setTicketCount, isPurchased }) =>
                 // 스마트 컨트랙트 인스턴스 생성
                 const contract = new web3.eth.Contract(data, contractAddress);
                 
-                console.log(contract);
-                
                 // 사용자의 지갑 주소 가져오기
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accounts[0];
