@@ -4,13 +4,15 @@ import './Tickets.css';
 import { Button, Typography, Grid, Stack } from '@mui/material';
 import AllTickets from '../components/AllTickets';
 import MyTickets from '../components/MyTickets';
+import star from '../images/starry-night-sky.jpg';
 
 const Tickets = () => {
     const [activeContent, setActiveContent] = useState(1);
 
     return (
-      <>
-        <Header />
+        <>
+            <Header />
+            <div className='ticket-back'></div>
         <div className="tickets-container" >
             <Stack spacing={2} direction="row" sx={{p: 3, justifyContent: 'center'}}>
                 <Button
