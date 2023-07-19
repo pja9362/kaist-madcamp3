@@ -14,8 +14,7 @@ import { Button, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TicketModal from './TicketModal';
-import { fetchUpdatedTicketCount } from '../services/api';
-
+import { fetchUpdatedTicketCount, fetchTicketImage } from '../services/api';
 const AllTickets = () => {
     const carouselRef = useRef(null);
     const [currentSlide, setCurrentSlide] = useState(3);
@@ -23,6 +22,9 @@ const AllTickets = () => {
     const [selectedConcert, setSelectedConcert] = useState(null);
   
     const [ticketCount, setTicketCount] = useState('');
+    const [ownerAddress, setOwnerAddress] = useState('');
+
+    const [isPurchased, setIsPurchased] = useState(false);
 
     useEffect(() => {
       const fetchTicketCounts = async () => {
@@ -31,6 +33,19 @@ const AllTickets = () => {
       };
       fetchTicketCounts();
     }, []);
+
+    useEffect(() => {
+      setOwnerAddress(localStorage.getItem('ownerAddress'));
+    }, []); 
+
+    useEffect(() => {
+      fetchTicketImage(ownerAddress).then((data) => {
+        const photoUri = data?.ticketUri; 
+        if (photoUri !== '') {
+          setIsPurchased(true);
+        } 
+      });
+    }, [ownerAddress]);
 
     const slides = [
         { id: 4, image: concert4, title: 'BTS SUGA 단독 콘서트', date: '2023.7.23', place: '서울 고척스카이돔', price: '스페셜석 : 0.001 ETH'},
@@ -108,7 +123,7 @@ const AllTickets = () => {
                       <div className='back-content'>
                             <Typography className='ticket-count' sx={{ color: 'white', fontSize: '11px', mt: '5px' }}>{50-ticketCount}/50</Typography>
                             <Button onClick={() => handlePurchaseClick(slide)} variant="outlined" sx={{color: 'white', fontSize: '12px', p: '2px 10px', border: '1px solid #fff'}} className="buy-button">
-                                티켓 구매
+                                {isPurchased ? '구매 완료' : '티켓 구매'}
                             </Button>
                             <img src={backImage} alt={`Concert ${slide.id}`}/> 
                         </div>
@@ -134,6 +149,7 @@ const AllTickets = () => {
           onClose={handleCloseModal}
           concert={selectedConcert}
           setTicketCount={setTicketCount}
+          isPurchased={isPurchased}
         />
       </>
   );

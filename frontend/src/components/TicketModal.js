@@ -4,8 +4,14 @@ import Web3 from 'web3';
 import data from "../abi/data.json";
 import config from '../config/config';
 import { fetchUpdatedTicketCount } from '../services/api';
+import AlertMessage from './AlertMessage';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
-const TicketModal = ({ open, onClose, concert, setTicketCount }) => {
+
+const TicketModal = ({ open, onClose, concert, setTicketCount, isPurchased }) => {
+
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
 
     const contractAddress = config.contractAddress;
 
@@ -28,7 +34,7 @@ const TicketModal = ({ open, onClose, concert, setTicketCount }) => {
                // 트랜잭션이 성공적으로 마이닝된 경우에만 처리
                 if (receipt.status) {
                     // 예매 완료 알림
-                    alert('예매 완료!');
+                    setIsAlertOpen(true);
 
                     // nftCount 업데이트를 TicketModal 컴포넌트의 상태로 처리합니다.
                     const updatedNftCount = await fetchUpdatedTicketCount();
@@ -38,10 +44,11 @@ const TicketModal = ({ open, onClose, concert, setTicketCount }) => {
                 // NFT 개수 업데이트
             } catch (error) {
                 console.error(error);
-            }
+            } 
     };
 
     return (
+        <>
         <Modal
             open={open}
             onClose={onClose}
@@ -89,16 +96,25 @@ const TicketModal = ({ open, onClose, concert, setTicketCount }) => {
                         </Typography>
                     </Box>
                     <Box sx={{m: '20px 10px 0px'}}>
+                        {!isPurchased ? (
+                            <>
                         <Button onClick={handlePurchaseConfirmation} variant="contained" color="primary" sx={{ mr: 2, backgroundColor: '#000' }}>
                             예매
                         </Button>
                         <Button onClick={onClose} variant="contained" sx={{backgroundColor: '#000'}}>
                             취소
                         </Button>
+                        </>) : (
+                            <IconButton onClick={onClose} sx={{ position: 'absolute', top: 15, right: 15 }}>
+                                <CloseIcon />
+                            </IconButton>
+                        )}
                     </Box>
                 </Box>
             </Box>
         </Modal>
+         <AlertMessage alertOpen={isAlertOpen} alertMessage="티켓이 발급되었습니다." />
+        </>
     );
 };
 
