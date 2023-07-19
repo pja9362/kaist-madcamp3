@@ -45,7 +45,6 @@ const AllTickets = () => {
     useEffect(() => {
       fetchTicketImage(ownerAddress).then((data) => {
         const photoUri = data?.ticketUri; 
-        console.log(photoUri);
         if (photoUri) {
           setIsPurchased(true);
         } 
@@ -107,7 +106,6 @@ const AllTickets = () => {
         }
         
         setSelectedConcert(concert);
-        console.log(concert.id);
         setIsModalOpen(true);
     };
 

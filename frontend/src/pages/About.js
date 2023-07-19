@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import vector from '../images/icon_light.svg';
 import light from '../images/light.png';
 import backgroundImg from '../images/home_background.jpg';
 import Header from '../components/Header';
 import './About.css';
+import { Button } from '@mui/material';
 
 const About = () => {
+  const navigate = useNavigate();
+  const [isTransformed, setIsTransformed] = useState(false);
 
+  const handleButtonClick = () => {
+        setIsTransformed(true);
+        setTimeout(() => {
+          navigate('/about-detail');
+      }, 1000);
+  };
   return (
     <>
       <Header />
-      <div className='container'style={{ width: '100vw', height: 'calc(100vh - 64px)', position: 'relative', overflow: 'hidden' }}>
+      <div className={`container ${isTransformed ? 'transformed' : ''}`} style={{ width: '100vw', height: 'calc(100vh - 64px)', position: 'relative', overflow: 'hidden' }}>
         <div className="back-right"></div>
         <div className="back-top"></div>
         <div style={{ left: '63%', top: '30%', position: 'absolute', color: 'white', fontSize: 70, fontWeight: '700', wordWrap: 'break-word' }}>
@@ -22,10 +32,10 @@ const About = () => {
           <div style={{ width: 12, height: 0, transform: 'rotate(90deg)', transformOrigin: '0 0', border: '2px #97FEED solid' }}></div>
         </div>
         <div style={{ width: 300, height: 60, paddingLeft: 33, paddingRight: 33, paddingTop: 5, paddingBottom: 5, left: '63%', top: 496, position: 'absolute', background: 'white', borderRadius: 30, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-          <div style={{ textAlign: 'center', color: 'black', fontSize: 16, fontWeight: '400', wordWrap: 'break-word' }}>Enjoy Your Stage</div>
+          <Button  onClick={handleButtonClick} sx={{ textAlign: 'center', color: 'black', fontSize: 16, fontWeight: '400', wordWrap: 'break-word' }}>Enjoy Your Stage</Button>
         </div>
-        <div style={{ width: 235, height: 0, left: '67.5%', top: 736, position: 'absolute', border: '1px white solid' }}></div>
-        <div style={{ width: 117, height: 0, left: '67.5%', top: 736, position: 'absolute', border: '1px #9A9EA5 solid' }}></div>
+        <div style={{ width: 235, height: 0, left: '65%', top: 736, position: 'absolute', border: '1px white solid' }}></div>
+        <div style={{ width: 117, height: 0, left: '65%', top: 736, position: 'absolute', border: '1px #9A9EA5 solid' }}></div>
         <div>
           <img
             src={light}

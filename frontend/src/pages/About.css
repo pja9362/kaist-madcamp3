@@ -24,6 +24,10 @@ to {
     animation: fadeIn 1s ease-in-out;
 }
 
+.container.transformed {
+    transform: translateX(-100%);
+    transition: transform 1s;
+}
 
 .back-top{
     width: 100%;

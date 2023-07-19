@@ -5,6 +5,7 @@ import SplashPage from './pages/SplashPage'
 import About from './pages/About';
 import Tickets from './pages/Tickets';
 import Community from './pages/Community';
+import AboutDetail from './pages/AboutDetail';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -21,6 +22,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<SplashPage/>} />
           <Route path="/about" element={<About />} />
+          <Route path="/about-detail" element={<AboutDetail />} />
           <Route path="/tickets" element={<Tickets />} />
           <Route path="/community" element={<Community />} />
         </Routes>
