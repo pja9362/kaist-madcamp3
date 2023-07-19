@@ -1,5 +1,5 @@
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import FavoriteBorderOutlined from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
@@ -275,7 +275,7 @@ const CommunityChat = ({ tokenId, roomId }) => {
                         </div>
                     </div>
                     <div className='flex-row' style={{ justifySelf: 'flex-end', marginBottom: 20 }}>
-                        <FavoriteBorderOutlined color='disabled' sx={{ p: 2, ml: '30px', color: isHeartClicked ? 'red' : 'white' }} onClick={() => { setIsHeartClicked(true); handleHeartButtonClick(); }} />
+                        <FavoriteBorderIcon sx={{ mr: '15px', ml: '35px', color: isHeartClicked ? 'red' : 'white' }} onClick={() => { setIsHeartClicked(true); handleHeartButtonClick(); }} />
                         <AttachFileIcon onClick={handleFileClick} sx={{ mr: '20px', color: 'white' }} />
                         <input id="file-upload" type="file" onChange={handleFileChange} style={{ display: 'none' }} />
                         <input className='chat-input-box' style={{ padding: '5px 15px', borderRadius: '20px', border: 0, outline: 'none' }} placeholder='Type your message' value={inputText} onKeyPress={handleKeyPress} onChange={handleInputTextChange} />
