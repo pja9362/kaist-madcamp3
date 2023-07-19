@@ -61,7 +61,6 @@ const Header = () => {
                         setAddress(accounts[0]);
                         setIsLogin(true);
                         localStorage.setItem('ownerAddress', accounts[0]);
-                        console.log(address);
                     }
                 } catch (err) {
                     console.error(err);
@@ -80,8 +79,6 @@ const Header = () => {
             const web3 = new Web3(window.ethereum);
             // 스마트 컨트랙트 인스턴스 생성
             const contract = new web3.eth.Contract(data, contractAddress);
-            
-            console.log(contract);
             
             // 사용자의 지갑 주소 가져오기
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
