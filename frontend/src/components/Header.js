@@ -10,6 +10,7 @@ import logo from '../images/logo_black.png';
 import data from '../abi/data.json';
 import config from '../config/config';
 import { fetchTicketImage } from '../services/api';
+import AlertMessage from './AlertMessage';
 
 const Header = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -18,6 +19,8 @@ const Header = () => {
     const [isLogin, setIsLogin] = useState(false);
     const [profile, setProfile] = useState(null);
     const [ownerAddress, setOwnerAddress] = useState('');
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const contractAddress = config.contractAddress;
     
@@ -88,8 +91,8 @@ const Header = () => {
             .send({ from: account });
            // 트랜잭션이 성공적으로 마이닝된 경우에만 처리
             if (receipt.status) {
-                // 예매 완료 알림
-                alert('변환 완료!');
+                setIsAlertOpen(true);
+                setAlertMessage('포토카드로 변환되었습니다 📸');
             }
 
             // NFT 개수 업데이트
@@ -203,7 +206,7 @@ const Header = () => {
         <>
         <AppBar position="static">
             <Toolbar style={{ justifyContent: 'center', backgroundColor: '#fff', color: '#000', textAlign: 'center' }}>
-            <img src={logo} alt="Logo" style={{ width: '4%', height: 'auto', marginLeft: '15px' }} />
+            <img src={logo} alt="Logo" style={{ width: '50px', height: 'auto', marginLeft: '15px' }} />
 
             <nav style={{ flexGrow: 1 }}>
                 <Button component={Link} to="/about" color="inherit">About</Button>
@@ -231,6 +234,7 @@ const Header = () => {
         <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose} >
             {sideList()}
         </Drawer>
+        <AlertMessage alertOpen={isAlertOpen} alertMessage={alertMessage} />
         </>
     );
 };
