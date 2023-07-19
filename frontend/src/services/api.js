@@ -4,7 +4,6 @@ const fetchUpdatedTicketCount = async () => {
     const ROUTER_PATH = '/meta-stage-web3/api/v1';
   
     const API_URL = `http://${IP_ADDRESS}:${PORT}${ROUTER_PATH}`;
-    console.log("API_URL", API_URL);
   
     try {
       const response = await fetch(`${API_URL}/nft-count`);
@@ -13,7 +12,6 @@ const fetchUpdatedTicketCount = async () => {
       }
       const data = await response.json();
       const { nftCount } = data;
-      console.log('nftCount:', data);
       return nftCount; // 함수에서 값을 반환하도록 수정합니다.
     } catch (error) {
       console.error('Error fetching nftCount:', error);
@@ -29,7 +27,6 @@ const fetchTicketImage = async (tokenId) => {
 
   try {
     const response = await fetch(API_URL);
-    console.log(API_URL);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
@@ -44,4 +41,3 @@ const fetchTicketImage = async (tokenId) => {
 };
   
 export { fetchUpdatedTicketCount, fetchTicketImage };
-  

@@ -6,52 +6,61 @@ import CommunityChat from './CommunityChat';
 import backImage from '../images/background_grad.png';
 import defaultProfile from '../images/default_profile.png';
 import { fetchTicketImage } from '../services/api';
+import { Avatar } from '@mui/material';
+import Web3 from 'web3';
+import data from '../abi/data.json';
+import config from '../config/config';
 
 const Community = () => {
     const [ownerAddress, setOwnerAddress] = useState('');
     const [chatRoomList, setChatRoomList] = useState([]);
     const [selectedRoomId, setSelectedRoomId] = useState(-1);
+    const [tokenId, setTokenId] = useState('');
+    const [isRegistered, setIsRegistered] = useState('');
 
     useEffect(() => {
         fetchChatRoomList();
       }, []);
 
-    
+    const contractAddress = config.contractAddress;
+
+
     // 채팅방 입장 Register MetaMask Call 로직
-    // const registerMetamaskCall = async () => {
-    //     try {
-    //       // Web3 인스턴스 생성
-    //       const web3 = new Web3(window.ethereum);
-    //       // 스마트 컨트랙트 인스턴스 생성
-    //       const contract = new web3.eth.Contract(data, contractAddress);
-    //       // 사용자의 지갑 주소 가져오기
-    //       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    //       const account = accounts[0];
-    //       console.log("account!!!!!! ", account);
-    //       // 스마트 컨트랙트의 함수 호출
-    //       const receipt = await contract.methods.MintTicket()
-    //         .send({ from: account });
-    //         console.log(receipt);
-    //       console.log("영수증 상태!!!!! ", receipt.status);
-    //       return receipt;
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    //   };
+    const registerMetamaskCall = async () => {
+        try {
+          // Web3 인스턴스 생성
+          const web3 = new Web3(window.ethereum);
+          // 스마트 컨트랙트 인스턴스 생성
+          const contract = new web3.eth.Contract(data, contractAddress);
+          // 사용자의 지갑 주소 가져오기
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const account = accounts[0];
+          // 스마트 컨트랙트의 함수 호출
+          const receipt = await contract.methods.register(tokenId)
+            .send({ from: account });
+          return receipt;
+        } catch (error) {
+          console.error(error);
+        }
+      };
       
 
-    // const isValidReceipt = (receipt) => {
-    //     return receipt && receipt.status;
-    // };
-    //   const handleChatRoomClick = async (roomId) => {
-    //     const receipt = await registerMetamaskCall();
-    //     console.log("영수증!!!!! ", receipt);
-    //     if (isValidReceipt(receipt)) {
-    //       setSelectedRoomId(roomId);
-    //     } else {
-    //       alert("Invalid receipt");
-    //     }
-    //   };
+    const isValidReceipt = (receipt) => {
+        return receipt && receipt.status;
+    };
+    
+    const handleChatRoomClick = async (roomId) => {
+        if(isRegistered) {
+            setSelectedRoomId(roomId);
+        } else {
+            const receipt = await registerMetamaskCall();
+            if (isValidReceipt(receipt)) {
+            setSelectedRoomId(roomId);
+            } else {
+            alert("Invalid receipt");
+            }
+        }
+    };
 
     const fetchChatRoomList = async () => {
         const PORT = 80;
@@ -66,7 +75,6 @@ const Community = () => {
             }
             const data = await response.json();
             setChatRoomList(data);
-            console.log('room List:', data);
             } catch (error) {
             console.error('Error fetching roomList:', error);
             }
@@ -93,9 +101,14 @@ const Community = () => {
     useEffect(() => {
         fetchTicketImage(ownerAddress).then((data) => {
             const photoUri = data?.photoUri; 
-            if (photoUri !== '') {
+            const tokenId = data?.tokenId;
+            const isRegister = data?.isRegistered;
+            if (photoUri !== '' ) {
                 setMyProfile(photoUri);
+                setTokenId(tokenId);
+                setIsRegistered(isRegister);
             }
+            
         });
     }, [ownerAddress]);
 
@@ -118,7 +131,13 @@ const Community = () => {
                             (data.id === selectedRoomId) ?
                                 <div key={index} className='list-item-box-selected'>
                                     <div className='flex-row'>
-                                        <div className='list-item-photo-selected' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div>
+                                            <Avatar
+                                                className='list-item-photo-selected'
+                                                src={data.profilePhotoUrl}
+                                                alt={`User Avatar`}
+                                                sx={{ width: 44, height: 44, borderRadius: 44, border: '2px solid var(--point-color)' }}
+                                            />
+                                        {/* <div className='list-item-photo-selected' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div> */}
                                         <div className='flex-column'>
                                             <div className='bold-text-white'>{data.name}</div>
                                             <div className='medium-text-white'>{ data.createdAt.split('T')[0] }</div>
@@ -126,9 +145,15 @@ const Community = () => {
                                     </div>
                                 </div>
                                 :
-                                <div key={index} className='list-item-box' onClick={()=>setSelectedRoomId(data.id)}>
+                                <div key={index} className='list-item-box' onClick={()=>handleChatRoomClick(data.id)}>
                                 <div className='flex-row'>
-                                    <div className='list-item-photo' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div>
+                                    {/* <div className='list-item-photo' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div> */}
+                                    <Avatar
+                                        className='list-item-photo'
+                                        src={data.profilePhotoUrl}
+                                        alt={`User Avatar`}
+                                        sx={{ width: 44, height: 44, borderRadius: 44, border: '2px solid var(--point-color)' }}
+                                    />
                                     <div className='flex-column'>
                                         <div className='bold-text'>{data.name}</div>
                                         <div className='medium-text'>{ data.createdAt.split('T')[0] }</div>

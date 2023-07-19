@@ -152,18 +152,16 @@ to {
 /* list item */
 
 .list-item-box {
-    padding: 15px;
+    padding: 20px;
     width: 310px;
-    height: 74px;
     display: flex;
     flex-direction: row;
 }
 
 .list-item-box-selected {
     background-color: var(--point-color);
-    padding: 15px;
+    padding: 20px;
     width: 310px;
-    height: 74px;
     display: flex;
     flex-direction: row;
     border-radius: 14px;
@@ -174,7 +172,7 @@ to {
 .list-item-photo-selected {
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain; 
     margin-right: 15px;
     height: 44px;
     width: 44px;
