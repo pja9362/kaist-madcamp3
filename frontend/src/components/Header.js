@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Box, Typography, Button, IconButton, Drawer, List, ListItem, ListItemText, Avatar } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import OpenseaIcon from '../images/icon_opensea.png';
+import EtherscanIcon from '../images/etherscan.png';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import logo from '../images/logo_black.png';
@@ -25,7 +26,11 @@ const Header = () => {
     const contractAddress = config.contractAddress;
     
     const handleOpenseaClick = () => {
-        window.open('https://opensea.io', '_blank');
+        window.open('https://testnets.opensea.io/', '_blank');
+    };
+
+    const handleEtherscanClick = () => {
+        window.open(`https://sepolia.etherscan.io/address/${contractAddress}`, '_blank');
     };
 
     // Function to handle Metamask login
@@ -212,6 +217,9 @@ const Header = () => {
             </nav>
 
             <div className="right-section" style={{ display: 'flex', alignItems: 'center' }}>
+                <IconButton color="inherit" onClick={handleEtherscanClick}>
+                <img width={30} height={30} src={EtherscanIcon} alt="Etherscan Logo" />
+                </IconButton>
                 <IconButton color="inherit" onClick={handleOpenseaClick}>
                 <img width={30} height={30} src={OpenseaIcon} alt="Opensea Logo" />
                 </IconButton>

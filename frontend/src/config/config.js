@@ -1,6 +1,6 @@
 const config = {
     networkVersionSepolia: '11155111',
-    contractAddress: '0x0dF65886541A46f2DDC7A4ac1cDDDF2FF2846F1f', 
+    contractAddress: '0x405fe293cD7533FD938E61548A3fd46A5a4d4DF3', 
 };
 
 export default config;

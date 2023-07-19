@@ -24,7 +24,6 @@ const Community = () => {
 
     const contractAddress = config.contractAddress;
 
-
     // 채팅방 입장 Register MetaMask Call 로직
     const registerMetamaskCall = async () => {
         try {
@@ -70,9 +69,11 @@ const Community = () => {
 
         try {
             const response = await fetch(`${API_URL}`, {method: 'GET'});
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+
             const data = await response.json();
             setChatRoomList(data);
             } catch (error) {
@@ -80,7 +81,7 @@ const Community = () => {
             }
         };
 
-        const formatString = (str) => {
+     const formatString = (str) => {
             if (!str || str.length < 8) {
                 return '';
             }
