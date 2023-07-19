@@ -26,7 +26,7 @@ const Header = () => {
     const contractAddress = config.contractAddress;
     
     const handleOpenseaClick = () => {
-        window.open('https://testnets.opensea.io/', '_blank');
+        window.open('https://testnets.opensea.io/collection/metastage-official', '_blank');
     };
 
     const handleEtherscanClick = () => {
