@@ -6,6 +6,7 @@ import CommunityChat from './CommunityChat';
 import backImage from '../images/background_grad.png';
 import defaultProfile from '../images/default_profile.png';
 import { fetchTicketImage } from '../services/api';
+import { Avatar } from '@mui/material';
 
 const Community = () => {
     const [ownerAddress, setOwnerAddress] = useState('');
@@ -118,7 +119,13 @@ const Community = () => {
                             (data.id === selectedRoomId) ?
                                 <div key={index} className='list-item-box-selected'>
                                     <div className='flex-row'>
-                                        <div className='list-item-photo-selected' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div>
+                                            <Avatar
+                                                className='list-item-photo-selected'
+                                                src={data.profilePhotoUrl}
+                                                alt={`User Avatar`}
+                                                sx={{ width: 44, height: 44, borderRadius: 44, border: '2px solid var(--point-color)' }}
+                                            />
+                                        {/* <div className='list-item-photo-selected' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div> */}
                                         <div className='flex-column'>
                                             <div className='bold-text-white'>{data.name}</div>
                                             <div className='medium-text-white'>{ data.createdAt.split('T')[0] }</div>
@@ -128,7 +135,13 @@ const Community = () => {
                                 :
                                 <div key={index} className='list-item-box' onClick={()=>setSelectedRoomId(data.id)}>
                                 <div className='flex-row'>
-                                    <div className='list-item-photo' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div>
+                                    {/* <div className='list-item-photo' style={data.profilePhotoUrl&&{ backgroundImage: `url(${data.profilePhotoUrl})` }}></div> */}
+                                    <Avatar
+                                        className='list-item-photo'
+                                        src={data.profilePhotoUrl}
+                                        alt={`User Avatar`}
+                                        sx={{ width: 44, height: 44, borderRadius: 44, border: '2px solid var(--point-color)' }}
+                                    />
                                     <div className='flex-column'>
                                         <div className='bold-text'>{data.name}</div>
                                         <div className='medium-text'>{ data.createdAt.split('T')[0] }</div>
