@@ -15,6 +15,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TicketModal from './TicketModal';
 import { fetchUpdatedTicketCount, fetchTicketImage } from '../services/api';
+import AlertMessage from './AlertMessage';
+
 const AllTickets = () => {
     const carouselRef = useRef(null);
     const [currentSlide, setCurrentSlide] = useState(3);
@@ -25,6 +27,8 @@ const AllTickets = () => {
     const [ownerAddress, setOwnerAddress] = useState('');
 
     const [isPurchased, setIsPurchased] = useState(false);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     useEffect(() => {
       const fetchTicketCounts = async () => {
@@ -41,7 +45,8 @@ const AllTickets = () => {
     useEffect(() => {
       fetchTicketImage(ownerAddress).then((data) => {
         const photoUri = data?.ticketUri; 
-        if (photoUri !== '') {
+        console.log(photoUri);
+        if (photoUri) {
           setIsPurchased(true);
         } 
       });
@@ -94,6 +99,13 @@ const AllTickets = () => {
     }, [currentSlide, slides.length]);
 
     const handlePurchaseClick = (concert) => {
+        if(!ownerAddress) {
+          setIsAlertOpen(true);
+          setAlertMessage('지갑을 연결해주세요.');
+
+          return;
+        }
+        
         setSelectedConcert(concert);
         console.log(concert.id);
         setIsModalOpen(true);
@@ -151,6 +163,7 @@ const AllTickets = () => {
           setTicketCount={setTicketCount}
           isPurchased={isPurchased}
         />
+        <AlertMessage alertOpen={isAlertOpen} alertMessage={alertMessage} />
       </>
   );
 };
